@@ -35,17 +35,17 @@ namespace VFS
 {
 
 Expansion_overflows::Expansion_overflows(const std::string& description) 
-		throw(std::bad_alloc) : overflow_error(description) 
+		throw() : overflow_error(description) 
 {
 };
 
 Nonexistent_user::Nonexistent_user(const std::string& description) 
-		throw(std::bad_alloc) : range_error(description) 
+		throw() : range_error(description) 
 {
 };
 
 No_home_directory::No_home_directory(const std::string& description) 
-		throw(std::bad_alloc) : range_error(description) 
+		throw() : range_error(description) 
 {
 };
 
@@ -65,7 +65,7 @@ namespace
  *
  */
 void expand_path_nouser(char* expbuf, size_t expbufsize, const char* orig)
-	throw(Expansion_overflows)
+	throw()
 {
 	size_t origlen = strlen(orig);
 
@@ -139,7 +139,7 @@ char* current_user() throw()
  *
  */
 void expand_path_known_home(char* expbuf, size_t expbufsize, const char* orig,
-	const char* homedir) throw(Expansion_overflows)
+	const char* homedir) throw()
 {
 	cdebug << "expand_path_known_home: Original path is \"" << orig 
 		<< "\".\n";
@@ -175,7 +175,7 @@ void expand_path_known_home(char* expbuf, size_t expbufsize, const char* orig,
 
 }
 void expand_path(char* expbuf, size_t expbufsize, const char* orig)
-	throw(Expansion_overflows, Nonexistent_user, No_home_directory)
+	throw()
 {
 #ifdef _WIN32
 	//Right now, we can't do any more elaborate processing than this...

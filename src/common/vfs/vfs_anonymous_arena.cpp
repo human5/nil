@@ -59,14 +59,14 @@ namespace VFS
 {
 
 pointer::Strong<Memory_arena> new_anonymous_arena(size_t size)
-	throw(std::bad_alloc)
+	throw()
 {
 	return pointer::Strong<Memory_arena>(static_cast<Memory_arena*>(
 		new Anonymous_arena(size)));
 }
 
 pointer::Strong<Memory_arena> resize_arena(pointer::Strong<Memory_arena> old,
-	size_t size) throw(std::bad_alloc)
+	size_t size) throw()
 {
 	pointer::Strong<Memory_arena> newarena = new_anonymous_arena(size);
 
@@ -85,7 +85,7 @@ pointer::Strong<Memory_arena> resize_arena(pointer::Strong<Memory_arena> old,
 }
 
 
-Anonymous_arena::Anonymous_arena(size_t size) throw(std::bad_alloc)
+Anonymous_arena::Anonymous_arena(size_t size) throw()
 {
 	void* base;
 

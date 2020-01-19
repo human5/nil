@@ -41,7 +41,7 @@ public:
  * 
  */
 	Subdivision_outside_parent(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 /**
@@ -65,8 +65,7 @@ public:
  */
 pointer::Strong<Memory_arena> new_subdivided_arena(
 	pointer::Strong<Memory_arena> parent, size_t offset, size_t size)
-	throw(std::bad_alloc, Subdivision_outside_parent, 
-	std::invalid_argument);
+	throw();
 
 
 /**
@@ -99,8 +98,7 @@ public:
  * 
  */
 	Subdivided_arena(pointer::Strong<Memory_arena> parent, size_t offset, 
-		size_t size) throw(std::bad_alloc, Subdivision_outside_parent, 
-		std::invalid_argument);
+		size_t size) throw();
 
 /**
  *

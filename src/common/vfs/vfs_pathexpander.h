@@ -49,7 +49,7 @@ public:
  * 
  */
 	Expansion_overflows(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 /**
@@ -75,7 +75,7 @@ public:
  * 
  */
 	Nonexistent_user(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 /**
@@ -102,7 +102,7 @@ public:
  * 
  */
 	No_home_directory(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 
@@ -127,7 +127,7 @@ public:
  *
  */
 void expand_path(char* expbuf, size_t expbufsize, const char* orig)
-	throw(Expansion_overflows, Nonexistent_user, No_home_directory);
+	throw();
 
 
 }

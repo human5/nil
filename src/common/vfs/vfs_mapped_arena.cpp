@@ -49,6 +49,8 @@
 
  ***************************************************************************/
 
+#include <cstring>
+
 #include "common/vfs/vfs_mapped_arena.h"
 #include "common/console/console.h"
 #ifndef _WIN32
@@ -66,7 +68,7 @@
 namespace VFS
 {
 
-Mmap_failed::Mmap_failed(const std::string& description) throw(std::bad_alloc)
+Mmap_failed::Mmap_failed(const std::string& description) throw()
 	: runtime_error(description)
 {
 }
@@ -96,8 +98,7 @@ namespace {
 }
 
 //Create new object that mmaps given file for read-only.
-Mapped_arena::Mapped_arena(const char* mappath) throw(std::bad_alloc,
-	Mmap_failed)
+Mapped_arena::Mapped_arena(const char* mappath) throw()
 {
 	size_t true_size;
 	size_t fake_size;
@@ -192,7 +193,7 @@ Mapped_arena::~Mapped_arena() throw()
 }
 
 pointer::Strong<Memory_arena> new_mapped_arena(const char* filename)
-	throw(std::bad_alloc, Mmap_failed)
+	throw()
 {
 	return pointer::Strong<Memory_arena>(static_cast<Memory_arena*>(
 		new Mapped_arena(filename)));

@@ -21,6 +21,7 @@
 
 #include <set>
 #include <cstdarg>
+#include <ostream>
 
 //! Thrown when console to be slaved is already a slave.
 class Already_slave {};
@@ -54,10 +55,10 @@ public:
 	virtual ~Console() throw();
 	/*! Add new slave.
 	    @param slave The slave-console that should be attached */
-	void add_slave(Console& slave) throw(Already_slave, Slave_loop, std::bad_alloc);
+	void add_slave(Console& slave) throw();
 	/*! Remove slave.
 	    @param slave The slave-console that should be removed */
-	void remove_slave(Console& slave) throw(Not_slave);
+	void remove_slave(Console& slave) throw();
 	/*! Get command.
 	    @param buffer A string buffer that stores the command
 	    FIXME: Is it possible to autodetect this?
@@ -97,7 +98,7 @@ private:
 	int get_command_slave(char* buffer, size_t buffersize) throw();
 	/*! Notify about new slave relationship.
 	    @param newmaster The new master for the slave */
-	void notify_slave(Console* newmaster) throw(Already_slave, Slave_loop);
+	void notify_slave(Console* newmaster) throw();
 	/*! Low-level get command routine.
 	    @param buffer The buffer storing the possible command message
 	    @param buffersize The size of the buffer

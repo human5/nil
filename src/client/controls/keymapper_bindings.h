@@ -112,7 +112,7 @@ public:
 	/*! Find a key based on a mouse button
 	    @param button The number of the button
 	    @return Returns the iterator */
-	iterator Evtmapper_bindings::find_by_mouse_button(int button);
+	iterator find_by_mouse_button(int button);
 	/*! Find a key based on its command function
 	    @param cmdfunction The commandfunction we are searching for
 	    @return Returns the iterator*/

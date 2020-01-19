@@ -19,6 +19,7 @@
 #include <cstdarg>
 #include <cctype>
 #include <iostream>
+#include <cstring>
 
 Console master_console;
 
@@ -56,7 +57,7 @@ static void _default_quit_function(void* arg)
 	abort();
 }
 
-void Console::notify_slave(Console* newmaster) throw(Already_slave, Slave_loop)
+void Console::notify_slave(Console* newmaster) throw()
 {
 	//Do nothing if master won't change.
 	if(master == newmaster)
@@ -110,7 +111,7 @@ void Console::_put_output(Severity severity, const char* source, const char* out
 }
 
 //! Add new slave.
-void Console::add_slave(Console& slave) throw(Already_slave, Slave_loop, std::bad_alloc)
+void Console::add_slave(Console& slave) throw()
 {
 	//Do we already have it?
 	if(slaves.count(&slave) > 0)
@@ -127,7 +128,7 @@ void Console::add_slave(Console& slave) throw(Already_slave, Slave_loop, std::ba
 	}
 }
 
-void Console::remove_slave(Console& slave) throw(Not_slave)
+void Console::remove_slave(Console& slave) throw()
 {
 	//Do we have such slave?
 	if(slaves.count(&slave) == 0)

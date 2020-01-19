@@ -12,6 +12,8 @@
 
  ***************************************************************************/
 
+#include <cstring>
+
 #include "common/vfs/vfs_inplace_alterable.h"
 #include "common/console/console.h"
 
@@ -54,7 +56,7 @@ void Inplace_alterable::alter(const char* newstring) throw()
 }
 
 Inplace_alterable::Inplace_alterable(const char* newstring, bool temporary)
-	throw(std::bad_alloc)
+	throw()
 {
 	if(!temporary) {
 		this->string = pointer::Strong<Inplace_alterable_helper>

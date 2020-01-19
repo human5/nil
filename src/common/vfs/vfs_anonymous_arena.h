@@ -32,7 +32,7 @@ namespace VFS
  * 
  */
 pointer::Strong<Memory_arena> new_anonymous_arena(size_t size)
-	throw(std::bad_alloc);
+	throw();
 
 /**
  * \brief Resize anonymous arena.
@@ -52,7 +52,7 @@ pointer::Strong<Memory_arena> new_anonymous_arena(size_t size)
  * 
  */
 pointer::Strong<Memory_arena> resize_arena(pointer::Strong<Memory_arena> old,
-	size_t size) throw(std::bad_alloc);
+	size_t size) throw();
 
 
 /**
@@ -77,7 +77,7 @@ public:
  * \exception std::bad_alloc Not enough memory to allocate the arena.
  * 
  */
-	Anonymous_arena(size_t size) throw(std::bad_alloc);
+	Anonymous_arena(size_t size) throw();
 
 /**
  *

@@ -127,7 +127,7 @@ struct File
  * 
  */
 	File(VFS::Files_dictionary_t dictionary, const char* filename,
-		bool from_heap) throw(std::bad_alloc);
+		bool from_heap) throw();
 
 /**
  * \brief The name of file.
@@ -221,7 +221,7 @@ pointer::Strong<VFS::File_instance> add_file_instance(
 	VFS::Files_dictionary_t dictionary, const char* filename, 
 	pointer::Strong<VFS::Memory_arena> mapping, 
 	pointer::Weak<VFS::File_instance> source_last, bool filename_mapped) 
-	throw(std::bad_alloc);
+	throw();
 
 }
 #endif

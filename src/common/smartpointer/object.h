@@ -197,7 +197,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	T* grab_reference_strong() throw(Already_finalized)
+	T* grab_reference_strong() throw()
 	{
 		POINTER_LOCK_OBJECT(this);
 		if(this->finalized || this->finalizing)

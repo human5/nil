@@ -525,7 +525,7 @@ THREADS_OBJS=`grep -l fork *.cpp | cut -f1 -d ':' | sed -e 's/.cpp/.o \\\/'`
 #THREADS_OBJS=`find . -maxdepth 1 -name '*.cpp' | sort | grep thread | sed -e 's/.cpp/.o \\\/'`
 EXC_OBJ=`find . -name '*.cpp' | sort | grep /Exception.cpp | sed -e 's/.cpp/.o \\\/'`
 THREAD_EXCP_OBJ=`find . -name '*.cpp' | sort | grep /ThreadException.cpp | sed -e 's/.cpp/.o \\\/'`
-OTHER_OBJS=`find . -name '*.cpp' | sort | sed '/\/ThreadException.cpp/d' | sed '/\/thread/d' | sed -e 's/.cpp/.o \\\/'`
+OTHER_OBJS=`find . -name '*.cpp' | grep -Ev 'nil_main_server.cpp|nil_main_client.cpp' | sort | sed '/\/ThreadException.cpp/d' | sed '/\/thread/d' | sed -e 's/.cpp/.o \\\/'`
 
 ####
 # Main script

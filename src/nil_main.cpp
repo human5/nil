@@ -87,7 +87,7 @@ class Console_stdout : public Console
 
 #define NILRC_LAST NILRC ".last_good"
 
-void signal_handler(int sig)
+static void signal_handler(int sig)
 {
 	raise(SIGSEGV);
 }

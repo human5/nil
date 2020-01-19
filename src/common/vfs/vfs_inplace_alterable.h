@@ -84,7 +84,7 @@ public:
  *
  */
 	Inplace_alterable(const char* newstring, bool temporary = false)
-		throw(std::bad_alloc);
+		throw();
 
 /**
  * \brief Alter the inplace alterable.

@@ -119,7 +119,7 @@ public:
  *
  */
 	explicit Strong(T* object = NULL, bool free_on_error = true) 
-		throw(std::bad_alloc)
+		throw()
 	{
 		this->tracker = NULL;
 		this->object = NULL;
@@ -260,7 +260,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	const T& operator* () const throw(Null_dereference)
+	const T& operator* () const throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -279,7 +279,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	T& operator* () throw(Null_dereference)
+	T& operator* () throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -298,7 +298,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	const T* operator-> () const throw(Null_dereference)
+	const T* operator-> () const throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -317,7 +317,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	T* operator-> () throw(Null_dereference)
+	T* operator-> () throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -340,7 +340,7 @@ public:
  * \author H. Ilari Liusvara
  *
  */
-	Strong(const Strong<T>& pointer) throw(Already_finalized)
+	Strong(const Strong<T>& pointer) throw()
 	{
 		if(pointer.object == NULL)
 		{
@@ -372,7 +372,7 @@ public:
  *
  */
 	Strong<T>& operator=(const Strong<T>& pointer)
-		throw(Already_finalized)
+		throw()
 	{
 		//Check for NOP.
 		if(pointer.object == this->object)
@@ -479,7 +479,7 @@ public:
  *
  */
 	inline Strong(const Weak<T>& pointer)
-		throw(Already_finalized);
+		throw();
 
 /**
  * \brief Assingment.
@@ -499,7 +499,7 @@ public:
  *
  */
 	inline Strong<T>& operator=(const Weak<T>& pointer) 
-		throw(Already_finalized);
+		throw();
 	
 
 private:
@@ -680,7 +680,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	const T& operator* () const throw(Null_dereference)
+	const T& operator* () const throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -699,7 +699,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	T& operator* () throw(Null_dereference)
+	T& operator* () throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -718,7 +718,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	const T* operator-> () const throw(Null_dereference)
+	const T* operator-> () const throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -737,7 +737,7 @@ public:
  * \author H. Ilari Liusvaara
  *
  */
-	T* operator-> () throw(Null_dereference)
+	T* operator-> () throw()
 	{
 		if(this->object == NULL)
 			throw Null_dereference("Dereferencing pointer to "
@@ -952,7 +952,7 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 template<typename T>
 Strong<T>& Strong<T>::operator=(const Weak<T>& pointer) 
-	throw(Already_finalized)
+	throw()
 {
 	//Check for NOP.
 	if(pointer.object == this->object)
@@ -978,7 +978,7 @@ Strong<T>& Strong<T>::operator=(const Weak<T>& pointer)
 
 ///////////////////////////////////////////////////////////////////////////////
 template<typename T>
-Strong<T>::Strong(const Weak<T>& pointer) throw(Already_finalized)
+Strong<T>::Strong(const Weak<T>& pointer) throw()
 {
 	if(pointer.object == NULL)
 	{
@@ -1022,7 +1022,7 @@ bool Strong<T>::operator< (const Weak<T>& pointer) const throw()
  *
  */
 template<typename S, typename T>
-Strong<S> pointer_cast(Strong<T> pointer) throw(std::bad_cast)
+Strong<S> pointer_cast(Strong<T> pointer) throw()
 {
 	Strong<T> ptr = pointer;
 	if(!ptr.is_castable((S*)NULL))
@@ -1046,7 +1046,7 @@ Strong<S> pointer_cast(Strong<T> pointer) throw(std::bad_cast)
  *
  */
 template<typename S, typename T>
-Weak<S> pointer_cast(Weak<T> pointer) throw(std::bad_cast)
+Weak<S> pointer_cast(Weak<T> pointer) throw()
 {
 	Weak<T> ptr = pointer;
 	if(!ptr.is_castable((S*)NULL))

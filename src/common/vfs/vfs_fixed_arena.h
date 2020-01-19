@@ -33,7 +33,7 @@ namespace VFS
  * 
  */
 pointer::Strong<Memory_arena> new_fixed_arena(const void* base, size_t size)
-	throw(std::bad_alloc);
+	throw();
 
 
 /**

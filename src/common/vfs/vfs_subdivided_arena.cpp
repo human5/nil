@@ -57,23 +57,21 @@ namespace VFS
 {
 
 Subdivision_outside_parent::Subdivision_outside_parent(
-	const std::string& description) throw(std::bad_alloc)
+	const std::string& description) throw()
 	: invalid_argument(description)
 {
 }
 
 pointer::Strong<Memory_arena> new_subdivided_arena(
 	pointer::Strong<Memory_arena> parent, size_t offset, size_t size)
-	throw(std::bad_alloc, Subdivision_outside_parent, 
-	std::invalid_argument)
+	throw()
 {
 	return pointer::Strong<Memory_arena>(static_cast<Memory_arena*>(
 		new Subdivided_arena(parent, offset, size)));
 }
 
 Subdivided_arena::Subdivided_arena(pointer::Strong<Memory_arena> parent, 
-	size_t offset, size_t size) throw(std::bad_alloc, 
-	Subdivision_outside_parent, std::invalid_argument)
+	size_t offset, size_t size) throw()
 {
 	//Sanity check.
 	if(!parent)

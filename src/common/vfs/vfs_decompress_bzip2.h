@@ -36,8 +36,7 @@ namespace VFS
  *
  */
 pointer::Strong<Memory_arena> decompress_bzip2(
-	pointer::Strong<Memory_arena> data) throw(Decompression_too_large,
-	Decompression_error, std::bad_alloc);
+	pointer::Strong<Memory_arena> data) throw();
 }
 
 #endif

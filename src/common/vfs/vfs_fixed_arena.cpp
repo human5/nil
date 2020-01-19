@@ -59,7 +59,7 @@
 namespace VFS
 {
 pointer::Strong<Memory_arena> new_fixed_arena(const void* base, size_t size)
-	throw(std::bad_alloc)
+	throw()
 
 {
 	return pointer::Strong<Memory_arena>(static_cast<Memory_arena*>(

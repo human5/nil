@@ -90,8 +90,7 @@ namespace
 #define UNCOMPRESS_MAXSIZE (8 * 1024 * 1024)
 
 pointer::Strong<Memory_arena> decompress_bzip2(
-	pointer::Strong<Memory_arena> data) throw(Decompression_too_large,
-	Decompression_error, std::bad_alloc)
+	pointer::Strong<Memory_arena> data) throw()
 {
 	//Altough repeated copying of the data is expensive, BZIP2 decoding
 	//is even more so...
@@ -201,8 +200,7 @@ pointer::Strong<Memory_arena> decompress_bzip2(
 #else
 
 pointer::Strong<Memory_arena> decompress_bzip2(
-	pointer::Strong<Memory_arena> data) throw(Decompression_too_large,
-	Decompression_error, std::bad_alloc)
+	pointer::Strong<Memory_arena> data) throw()
 {
 	throw Decompression_error("BZIP2 decompression support disabled.");
 }

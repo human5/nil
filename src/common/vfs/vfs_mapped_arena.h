@@ -40,7 +40,7 @@ public:
  * 
  */
 	Mmap_failed(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 /**
@@ -59,7 +59,7 @@ public:
  * 
  */
 pointer::Strong<Memory_arena> new_mapped_arena(const char* filename)
-	throw(std::bad_alloc, Mmap_failed);
+	throw();
 
 
 /**
@@ -87,7 +87,7 @@ public:
  * \exception Mmap_failed Mapping file failed for some reason.
  * 
  */
-	Mapped_arena(const char* filename) throw(std::bad_alloc, Mmap_failed);
+	Mapped_arena(const char* filename) throw();
 
 /**
  *

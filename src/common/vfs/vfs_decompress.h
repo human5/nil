@@ -39,7 +39,7 @@ public:
  * 
  */
 	Decompression_too_large(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 /**
@@ -65,7 +65,7 @@ public:
  * 
  */
 	Decompression_error(const std::string& description) 
-		throw(std::bad_alloc);
+		throw();
 };
 
 
@@ -92,8 +92,7 @@ public:
  *
  */
 pointer::Strong<Memory_arena> decompress_data(
-	pointer::Strong<Memory_arena> data) throw(Decompression_too_large,
-	Decompression_error, std::bad_alloc);
+	pointer::Strong<Memory_arena> data) throw();
 }
 
 #endif

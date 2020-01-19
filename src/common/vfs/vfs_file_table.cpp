@@ -8,6 +8,8 @@
 
  ***************************************************************************/
 
+#include <cstring>
+
 #include "common/vfs/vfs_file_table.h"
 #include "common/console/console.h"
 #include "common/exception.h"
@@ -61,7 +63,7 @@ void File_instance::finalize() throw()
 }
 
 File::File(VFS::Files_dictionary_t dictionary, const char* _filename,
-		bool from_heap) throw(std::bad_alloc)
+		bool from_heap) throw()
 	: filename(_filename)
 {
 	this->dictionary = dictionary;
@@ -106,7 +108,7 @@ pointer::Strong<VFS::File_instance> add_file_instance(
 	VFS::Files_dictionary_t dictionary, const char* filename, 
 	pointer::Strong<VFS::Memory_arena> mapping, 
 	pointer::Weak<VFS::File_instance> source_last, bool filename_mapped) 
-	throw(std::bad_alloc)
+	throw()
 {
 	
 	pointer::Strong<VFS::File_instance> new_instance;
