@@ -62,6 +62,10 @@ int win32_main(int argc, char *argv[]);
 #else
 #define NILRC "~/.nilrc"
 #endif
+#define NILRC_LAST NILRC ".last_good"
+
+char szNILRC[] = NILRC;
+char szNILRC_LAST[] = NILRC_LAST;
 
 //! @author H. Ilari Liusvaara
 //! @brief Simple print-to-stdout console.
@@ -85,7 +89,6 @@ class Console_stdout : public Console
 	}
 };
 
-#define NILRC_LAST NILRC ".last_good"
 
 static void signal_handler(int sig)
 {
@@ -113,7 +116,7 @@ int nil_main(int argc,char **argv) {
 	master_console.put_output(Console::MESSAGE, "NiL - Worms, Violence and the GPL\n\n");
 	Configuration config;
 	
-	if (!config.load_file(NILRC)) {
+	if (!config.load_file(szNILRC)) {
 		master_console.put_output(Console::WARNING, "Unable to read " NILRC ":\n%s\n",config.get_error());
 	}
 
@@ -132,9 +135,10 @@ int nil_main(int argc,char **argv) {
 		return 2;
 	}
 
-	config.save_options(NILRC_LAST);
+	config.save_options(szNILRC_LAST);
 
-	const char* chattiness = config.get_option("chattiness");
+    char szChattiness[] = "chattiness";
+	const char* chattiness = config.get_option(szChattiness);
 	Console::Severity chattiness_numeric = Console::MESSAGE;
 	if(!strcasecmp(chattiness, "debug") || !strcasecmp(chattiness, "4"))
 		chattiness_numeric = Console::DEBUG;
@@ -149,7 +153,8 @@ int nil_main(int argc,char **argv) {
 
 	master_console.set_chattiness(chattiness_numeric);
 
-	const char *mode = config.get_option("mode");
+    char szMode[] = "mode";
+	const char *mode = config.get_option(szMode);
 
 	if (strcasecmp(mode,"server") == 0) {
 		run_server(config);
@@ -203,19 +208,21 @@ int nil_main(int argc,char **argv) {
 
 		//expand the output filename:
 		char expanded_filename[200];
+        char szOutputLump[] = "output_lump";
 		try {
 			VFS::expand_path(expanded_filename, 
 				sizeof(expanded_filename),
-				config.get_option("output_lump"));
+				config.get_option(szOutputLump));
 		} catch(std::exception& e) {
 			cerror << "Unable to expand the path \"" 
-				<< config.get_option("output_lump") << "\": "
+				<< config.get_option(szOutputLump) << "\": "
 				<< e.what() << "\n";
 			return false;
 		}
 
 		Loader loader;
-		load_files_standard(loader, config.get_option("data"));
+        char szData[] = "data";
+		load_files_standard(loader, config.get_option(szData));
 
 		//save a lump:
 		int bs = loader.save_lump(NULL, 0);

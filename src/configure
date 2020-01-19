@@ -330,6 +330,7 @@ build_Makefile() {
 	else
 		echo "CCFLAGS =" >> Makefile
 	fi
+	echo "CCFLAGS += -Wall -Werror -Wfatal-errors" >> Makefile
 	if test $optimize = 1
 	then
 		ARCH=`uname -m`
