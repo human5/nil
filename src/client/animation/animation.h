@@ -42,7 +42,7 @@ public:
 	//! Destructor that deletes sequences, aimangles, instructions and loaded_graphics
 	~Animation();
 	//! Loads the script from file
-	bool create(Loader *loader_, char *name, int32 color = NOCOLOR);
+	bool create(Loader *loader_, const char *name, int32 color = NOCOLOR);
 
 	//Returns the frame that should currently be used
 	/*

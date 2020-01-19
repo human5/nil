@@ -132,7 +132,7 @@ bool Animator::goto_instruction(int instruction_index) {
 	return true;
 }
 
-bool Animator::start_sequence(char *sequence_name)
+bool Animator::start_sequence(const char *sequence_name)
 {
 	Anim_sequences::iterator s = animation->sequences->find(sequence_name);
 	if (s != animation->sequences->end() && s->second.size() > 0) {

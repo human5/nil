@@ -130,7 +130,7 @@ public:
 	    @param buffer_size ???
 	    @param offset ???
 	    @return Returns true when the file was read*/
-	bool fileread(char *name, void *buffer, unsigned int buffer_size, unsigned int offset = 0);
+	bool fileread(const char *name, void *buffer, unsigned int buffer_size, unsigned int offset = 0);
 	/*! mmap()'ed direct access; returns a pointer to the file or NULL
 	    @param name The name of the file */
 	const void *getfile(const char *name);

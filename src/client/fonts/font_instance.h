@@ -78,7 +78,7 @@ public:
 	    @param red The red value of the color
 	    @param green The green value of the color
 	    @param blue The blue value of the color */
-	bool put_text(int xpos, int ypos, char *text, Mutable_raw_surface *target , bool direct_copy , uint8_t red , uint8_t green , uint8_t blue );
+	bool put_text(int xpos, int ypos, const char *text, Mutable_raw_surface *target , bool direct_copy , uint8_t red , uint8_t green , uint8_t blue );
 	//init(Loader *loader, char *name, int size, int32 color=PIXELA(255,255,255,15), bool antialize=true);
 protected:
 	//! The font we work with

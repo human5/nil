@@ -366,7 +366,7 @@ Sint8 Obj_scoreboard::getRank(Sint32 playerId ) {
 bool Obj_scoreboard::get_fragmessage(char *msg) {
 	// frag messages
 	int fragPresetNum = 6;
-	char *fragPreset[] = { 
+	const char *fragPreset[] = { 
 		"%s fragged %s",
 		"%s killed %s",
 		"%s pulverized %s",
@@ -377,7 +377,7 @@ bool Obj_scoreboard::get_fragmessage(char *msg) {
 
 	// suicide messages
 	int suicidePresetNum = 5;
-	char *suicidePreset[] = { 
+	const char *suicidePreset[] = { 
 		"%s was tired of life",
 		"%s commited suicide",
 		"%s decided to start over",
@@ -387,7 +387,7 @@ bool Obj_scoreboard::get_fragmessage(char *msg) {
 
 	// team play "suicide" messages
 	int teamplayPresetNum = 4;
-	char *teamplayPreset[] = { 
+	const char *teamplayPreset[] = { 
 		"%s got rid of his teammate %s",
 		"%s had coordination problems with %s",
 		"%s friendly-fired %s",
@@ -414,7 +414,7 @@ bool Obj_scoreboard::get_fragmessage(char *msg) {
 			// team mode also has to handle team killings
 			if(world->getServerSettings()->getGameMode() == Obj_settings::gm_teamplay) {
 				
-				char *frmsg;
+				const char *frmsg;
 				mFragCounter = (mFragCounter+last_killers[0]+last_victims[0])%fragPresetNum;
 				frmsg = fragPreset[mFragCounter];
 

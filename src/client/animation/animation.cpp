@@ -74,7 +74,7 @@ Animation::~Animation() {
 	delete loaded_graphics;
 }
 
-bool Animation::create(Loader *loader_, char *name, int32 color) {
+bool Animation::create(Loader *loader_, const char *name, int32 color) {
 	player_color = color;
 	loader = loader_;
 

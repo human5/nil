@@ -38,7 +38,7 @@ public:
 	//! Returns the frame that should currently be used for directionless animations:
 	Graphic *get_current_frame(float newtime);
 	//! Finds a random sequence by this name and jumps to it
-	bool start_sequence(char *sequence_name);
+	bool start_sequence(const char *sequence_name);
 protected:
 	//! returns the frame that should currently be used
 	Graphic *get_current_frame(float curtime_, int aim_id, int dir);

@@ -64,7 +64,7 @@ void Animations::init(Loader *loader_) {
 	loader = loader_;
 }
 
-Animator *Animations::new_animator(char	*name, int32 color) {
+Animator *Animations::new_animator(const char *name, int32 color) {
 	Loaded_animations_key key;
 	key.name = name;
 	key.color = color;

@@ -141,7 +141,7 @@ void Menu_item::draw_item(Mutable_raw_surface *target, int xpos_, int ypos_) {
 			font->put_text(xpos-20, ypos, "D", target, true, 255,255,255 );
 			break;
 		}*/
-	font->put_text(xpos+1, ypos+1, label, target, true, 0,0,0 );
+	font->put_text(xpos+1, ypos+1, (const char *)label, target, true, 0,0,0 );
 	if (type == it_sepstart) {
 		font->put_text(xpos+3, ypos+3, label, target, true, 0,0,0 );
 	}

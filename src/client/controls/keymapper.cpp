@@ -246,12 +246,12 @@ void Evtmapper::bindkey(CMDFUNCTION::Function function, SDLKey sdlsym) {
 		char j_str[20];
 		sprintf(j_str,"%i",(int)sdlsym);
 
-		configuration->set_option((char *)(*j)->config_name.c_str(),j_str);
-		configuration->set_option((char *)(*i)->config_name.c_str(),i_str);
+		configuration->set_option((*j)->config_name.c_str(),j_str);
+		configuration->set_option((*i)->config_name.c_str(),i_str);
 	} else {
 		Evtmapper_bindings::iterator j = bindings->find_by_function(function);
 		char j_str[20];
 		sprintf(j_str,"%i",(int)sdlsym);
-		configuration->set_option((char *)(*j)->config_name.c_str(),j_str);
+		configuration->set_option((*j)->config_name.c_str(),j_str);
 	}
 }

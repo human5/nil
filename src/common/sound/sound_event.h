@@ -33,7 +33,7 @@ class Serializer_reader;
 class Sound_event {
 public:
 	//! Constructor
-	Sound_event(char *sample_name_, int flags_, float volume_, float x_pos_, float y_pos_, int objectid_, Soundsystem *soundsystem_);
+	Sound_event(const char *sample_name_, int flags_, float volume_, float x_pos_, float y_pos_, int objectid_, Soundsystem *soundsystem_);
 	//! Destructor
 	~Sound_event();
 	//! ???

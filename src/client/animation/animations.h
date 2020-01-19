@@ -38,7 +38,7 @@ public:
 	    new animator object from it. YOU MUST: Delete the Animator once you are done with it.
 	    @param name The name
 	    @param color The color */
-	Animator *new_animator(char *name, int32 color = NOCOLOR);
+	Animator *new_animator(const char *name, int32 color = NOCOLOR);
 protected:
 	//! ???
 	Loaded_animations *animations;

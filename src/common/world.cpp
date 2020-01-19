@@ -370,7 +370,7 @@ bool World::collision(int x0, int y0, int x1, int y1, int &xc, int &yc, int radi
 	//get delta values
 	int dx = x1-x0;
 	int dy = y1-y0;
-	const int mapSizeX = map_buffer.get_xsize();
+	//const int mapSizeX = map_buffer.get_xsize();
 
 	// always first check source position, this shouldnt happen, but you never know...
 	// TODO: check whole radius?
@@ -391,7 +391,8 @@ bool World::collision(int x0, int y0, int x1, int y1, int &xc, int &yc, int radi
 	// last good position in line
 	int old_y, old_x;
 	// precalculated offset to the interesting pixels
-	int offset;
+    // XXX Unused Variable
+	//int offset;
 	if (ABS(dx) > ABS(dy)) {
 		// x major
 		
@@ -407,7 +408,7 @@ bool World::collision(int x0, int y0, int x1, int y1, int &xc, int &yc, int radi
 		while (x != x1 ) {
 
 			//calc the offset to the most interesting pixel
-			offset = x+y*mapSizeX; //saves radius*2 adds.
+			//offset = x+y*mapSizeX; //saves radius*2 adds.
 
 			// first check center pixel
 			//if (!IS_PASSABLE(pixels[offset])) {
@@ -458,7 +459,7 @@ bool World::collision(int x0, int y0, int x1, int y1, int &xc, int &yc, int radi
 		while (y != y1 ) {
 
 			//calc the offset to the most interesting pixel
-			offset = x+y*mapSizeX; //saves radius*2 adds.
+			//offset = x+y*mapSizeX; //saves radius*2 adds.
 
 			// first check center pixel
 			if(!isPassable(x,y) ) {
@@ -656,7 +657,7 @@ bool World::stoneCollision(int x0, int y0, int x1, int y1, int &xc, int &yc, int
 	int dy = y1-y0;
 	//FIXME: is this needed?
 	//const int32 *pixels = map_buffer.get_pixels_read();
-	const int mapSizeX = map_buffer.get_xsize();
+	//const int mapSizeX = map_buffer.get_xsize();
 	// always first check source position, this shouldnt happen, but you never know...
 	if (isStone(x0,y0) ) {
 		xc = x0;
@@ -669,7 +670,8 @@ bool World::stoneCollision(int x0, int y0, int x1, int y1, int &xc, int &yc, int
 	}
 	int x, y;         // position tracking for line
 	int old_y, old_x; // last good position in line
-	int offset;       // precalculated offset to the interesting pixels
+    // XXX Unused Variable
+	//int offset;       // precalculated offset to the interesting pixels
 	if (ABS(dx) > ABS(dy)) {
 		// x major
 		int ymove = SIGN(dy);                // The step to take with y when error hits 1
@@ -682,7 +684,7 @@ bool World::stoneCollision(int x0, int y0, int x1, int y1, int &xc, int &yc, int
 		x1 += dx;
 		while (x != x1 ) {
 			//calc the offset to the most interesting pixel
-			offset = x+y*mapSizeX; //saves radius*2 adds.
+			//offset = x+y*mapSizeX; //saves radius*2 adds.
 			// first check center pixel
 			if(isStone(x,y) ) {
 				xc = x-dx;
@@ -722,7 +724,7 @@ bool World::stoneCollision(int x0, int y0, int x1, int y1, int &xc, int &yc, int
 		y1 += dy; //NT
 		while (y != y1 ) {
 			//calc the offset to the most interesting pixel
-			offset = x+y*mapSizeX; //saves radius*2 adds.
+			//offset = x+y*mapSizeX; //saves radius*2 adds.
 			// first check center pixel
 			if(isStone(x,y) ) {
 				xc = old_x;

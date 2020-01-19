@@ -101,7 +101,7 @@ void Obj_smoke::serialize(Serializer *serializer)
 
 void Obj_smoke::client_think() {
 	//Map_hit hit = update_simple(false); //this calls client_think() for us and checks for collisions
-	Map_hit hit = update_simple(false); //this calls client_think() for us and checks for collisions
+	update_simple(false); //this calls client_think() for us and checks for collisions
 	//newton_update(world->gettime());
 
 	if ( age() > LIFE_TIMER ) {

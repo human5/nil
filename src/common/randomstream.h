@@ -66,17 +66,17 @@ private:
 	//! pointers into number table
 	int inext, inextp;
 	//! store seed and number for subtraction
-	long ma[56];
+	unsigned long ma[56];
 };
 
 
 inline Random_stream::Random_stream(long seed) {
 	idnum = seed;
 
-	long mj = MSEED - (idnum < 0 ? -idnum : idnum);
+	unsigned long mj = MSEED - (idnum < 0 ? -idnum : idnum);
 	mj %= MBIG;
 	ma[55] = mj;
-	long mk = 1;
+	unsigned long mk = 1;
 
 	// init table once, otherwise strange results...
 	for(int i=0;i<=55;i++) ma[i] = (i*i+seed); 
@@ -108,7 +108,7 @@ inline double Random_stream::get_double( void ) {
 	if( ++inextp == 56) inextp = 1;
 
 	// generate by subtraction
-	long mj = ma[inext] - ma[inextp];
+	unsigned long mj = ma[inext] - ma[inextp];
 
 	// check range
 	if(mj < MZ) mj += MBIG;
@@ -121,7 +121,7 @@ inline int Random_stream::get_integer( int max ) {
 	if( ++inextp == 56) inextp = 1;
 
 	// generate by subtraction
-	long mj = ma[inext] - ma[inextp];
+	unsigned long mj = ma[inext] - ma[inextp];
 
 	// check range
 	if(mj < MZ) mj += MBIG;
@@ -142,7 +142,7 @@ inline int Random_stream::get_integer( int min, int max ) {
 	if( ++inextp == 56) inextp = 1;
 
 	// generate by subtraction
-	long mj = ma[inext] - ma[inextp];
+	unsigned long mj = ma[inext] - ma[inextp];
 
 	// check range
 	if(mj < MZ) mj += MBIG;

@@ -35,8 +35,7 @@ namespace VFS
 namespace
 {
 	//Check header of GZIP file. Returns length of header.
-	size_t check_header(pointer::Strong<Memory_arena> arena) throw(
-		Decompression_error)
+	size_t check_header(pointer::Strong<Memory_arena> arena) throw()
 	{
 		const unsigned char* file = (const unsigned char*)
 			arena->get_base();
@@ -64,7 +63,7 @@ namespace
 		  	throw Decompression_error("Unknown algorithm.");
 
 		//Check flags
-		if(file[3] & 0x1F != file[3]) 
+		if((file[3] & 0x1F) != file[3]) 
 			throw Decompression_error("Unknown flags set.");
 
 		//Extract flags.

@@ -26,7 +26,7 @@
 
 //-------------------------------------------------------------------
 // Nasty, but that's what the wrappers are for.
-Sound_event::Sound_event(char *sample_name, int flags_, float volume_, float x_pos_, float y_pos_, int objectid_, Soundsystem *soundsystem_)
+Sound_event::Sound_event(const char *sample_name, int flags_, float volume_, float x_pos_, float y_pos_, int objectid_, Soundsystem *soundsystem_)
 {
 	name = new char[strlen(sample_name)+1];
 	strcpy(name,sample_name);

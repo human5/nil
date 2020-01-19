@@ -444,6 +444,7 @@ void Obj_player_avatar::client_think() {
 				Obj_gib *gib = NULL;
 				gib = (Obj_gib *)clientworld->newanonobject(ot_gib);
 				if (gib)
+                {
 					offset = Math::rad2vector (rnd(0, 999)*(0.002*PI));
 					offset.scale(rnd(10, 30));
 					gib->init( xpos, ypos,
@@ -451,6 +452,7 @@ void Obj_player_avatar::client_think() {
 						yspeed+damage_speed.y+offset.y,
 						player_data->getcolor()
 					);
+                }
 			}
 
 		}

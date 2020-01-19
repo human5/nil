@@ -237,7 +237,7 @@ Configuration::Configuration() {
 	add_option(
 		"fullscreen",
 		"Should the game run in fullscreen(1) or in a window (0) (default: 1)",
-		"1",
+		"0",
 		0,1,true
 	);
 
