@@ -498,7 +498,10 @@ void Game_client::draw_menu(Mutable_raw_surface *target, Menu *menu) {
 void Game_client::add_chatmessage() {
 	// add player name
 	char chatOut[Obj_chatmessage::MSGLENGTH];
-	snprintf(chatOut,Obj_chatmessage::MSGLENGTH, "%s :%s", players[0].player_name, mChatString);
+	if( -1 == snprintf(chatOut,Obj_chatmessage::MSGLENGTH, "%s :%s", players[0].player_name, mChatString) )
+    {
+        // Prevent GCC truncation warning
+    }
 	strcpy(mChatString, chatOut);
 	// activate send flag
 	mSendMsg = true;

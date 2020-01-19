@@ -78,7 +78,7 @@ Anim_token::~Anim_token() {
 	if (source_save) free(source_save);
 }
 
-void Anim_token::error(char *desc) {
+void Anim_token::error(const char *desc) {
 	if (source_save) free(source_save);
 	source_save = strdup(desc);
 	parameters_inuse = 1;

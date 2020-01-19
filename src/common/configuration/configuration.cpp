@@ -668,7 +668,7 @@ bool Configuration::set_option(char *name, char *value)
 }
 
 //-----------------------------------------------------------------------------
-const char *Configuration::get_option(char *name)
+const char *Configuration::get_option(const char *name)
 {
 	Config_values::iterator i=values->find(name);
 	if (i == values->end()) {
@@ -681,7 +681,7 @@ const char *Configuration::get_option(char *name)
 }
 
 //-----------------------------------------------------------------------------
-int Configuration::get_option_int(char *name)
+int Configuration::get_option_int(const char *name)
 {
 	const char *value = get_option(name);
 	int result = -1;
@@ -691,7 +691,7 @@ int Configuration::get_option_int(char *name)
 }
 
 //-----------------------------------------------------------------------------
-Config_xy Configuration::get_option_xy(char *name)
+Config_xy Configuration::get_option_xy(const char *name)
 {
 	const char *value = get_option(name);
 	Config_xy result;

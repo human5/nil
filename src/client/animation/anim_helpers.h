@@ -141,7 +141,7 @@ protected:
 	//! ???
 	int line_number;
 	//! ???
-	void error(char *desc);
+	void error(const char *desc);
 	//! ???
 	char *source;
 	//! ???

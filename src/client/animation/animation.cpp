@@ -120,7 +120,8 @@ bool Animation::read_script(char *root, char *script) {
 	//translate the tokens to Instructions.
 	Anim_tokenizer tokenizer(script);	
 	Anim_token *cur = tokenizer.getcurrent();
-	Anim_token *next = tokenizer.getnext();
+    // XXX Unused variable
+    //Anim_token *next = tokenizer.getnext();
 	bool error = false;
 	while (cur->gettype() != Anim_token::THEEND && cur->gettype() != Anim_token::ANIMERROR) {
 		int line_number = cur->getline();
@@ -264,7 +265,8 @@ bool Animation::read_script(char *root, char *script) {
 
 		tokenizer.next_token();
 		cur = tokenizer.getcurrent();
-		next = tokenizer.getnext();
+        // XXX Unused variable
+		//next = tokenizer.getnext();
 		line_number++;
 	}
 

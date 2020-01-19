@@ -117,7 +117,7 @@ int Font_instance::get_text_height(char *text) {
 	return tempheight;
 }
 
-bool Font_instance::put_text(int xpos, int ypos, char *text, Mutable_raw_surface *target, bool direct_copy, int32 red, int32 green, int32 blue ) {
+bool Font_instance::put_text(int xpos, int ypos, char *text, Mutable_raw_surface *target, bool direct_copy, uint8_t red, uint8_t green, uint8_t blue ) {
 	SDL_Color white = { red, green, blue, 0 };
 
 	// FIXME: support for other font rendering styles

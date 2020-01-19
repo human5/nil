@@ -104,11 +104,11 @@ public:
 	//! sets an option
 	bool set_option(char *name, char *value);
 	//! gets an option
-	const char *get_option(char *name);
+	const char *get_option(const char *name);
 	//! gets an option and returns as integer
-	int get_option_int(char *name);
+	int get_option_int(const char *name);
 	//! gets an option and returns as "123x456" formated string
-	Config_xy get_option_xy(char *name);
+	Config_xy get_option_xy(const char *name);
 	//! error reporting handling
 	char *get_error() { return error; }
 	//! lists all the options

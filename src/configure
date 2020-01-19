@@ -330,7 +330,7 @@ build_Makefile() {
 	else
 		echo "CCFLAGS =" >> Makefile
 	fi
-	echo "CCFLAGS += -Wall -Werror -Wfatal-errors" >> Makefile
+	echo "CCFLAGS += -Wall -Werror" >> Makefile
 	if test $optimize = 1
 	then
 		ARCH=`uname -m`
@@ -352,7 +352,7 @@ build_Makefile() {
 	then
 	echo "all : \$(BIN) done" >> Makefile
 	else
-	echo "all : clean \$(BIN) strip done" >> Makefile
+	echo "all : \$(BIN) strip done" >> Makefile
 	fi
 	echo "" >> Makefile
 

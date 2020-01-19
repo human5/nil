@@ -86,20 +86,20 @@ public:
 	    @param cmdfunction The commandfunction for this key
 	    @param config_name ???
 	    @param display_name ??? */
-	void add_keybinding(SDLKey sdlsym, int cmdfunction, char *config_name, char *display_name);
+	void add_keybinding(SDLKey sdlsym, int cmdfunction, const char *config_name, const char *display_name);
 	/*! Add a joystick button binding
 	    @param joystick The number of the joystick
 	    @param button The number of the joystick button
 	    @param cmdfunction ???
 	    @param config_name ???
 	    @param display_name ??? */
-	void add_joybuttonbinding(int joystick, int button, int cmdfunction, char *config_name, char *display_name);
+	void add_joybuttonbinding(int joystick, int button, int cmdfunction, const char *config_name, const char *display_name);
 	/*! Add a mouse button binding
 	    @param button The number of the joystick button
 	    @param cmdfunction ???
 	    @param config_name ???
 	    @param display_name ??? */
-	void add_mousebuttonbinding(int button, int cmdfunction, char *config_name, char *display_name);
+	void add_mousebuttonbinding(int button, int cmdfunction, const char *config_name, const char *display_name);
 	/*! Find a key based on its symbolic SDL keyname
 	    @param sdlsym The symbolic SDL name for a key
 	    @return Returns the iterator*/

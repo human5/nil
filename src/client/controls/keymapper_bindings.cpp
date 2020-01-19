@@ -28,7 +28,7 @@ Evtmapper_bindings::~Evtmapper_bindings() {
 	}
 }	
 
-void Evtmapper_bindings::add_keybinding(SDLKey sdlsym,int cmdfunction,char *config_name, char *display_name) {
+void Evtmapper_bindings::add_keybinding(SDLKey sdlsym, int cmdfunction, const char *config_name, const char *display_name) {
 	Evtmapper_binding *newbinding = new Evtmapper_binding;
 
 	newbinding->type = binding_key;
@@ -40,7 +40,7 @@ void Evtmapper_bindings::add_keybinding(SDLKey sdlsym,int cmdfunction,char *conf
 	push_back(newbinding);
 }
 
-void Evtmapper_bindings::add_joybuttonbinding(int joystick, int button, int cmdfunction, char *config_name, char *display_name) {
+void Evtmapper_bindings::add_joybuttonbinding(int joystick, int button, int cmdfunction, const char *config_name, const char *display_name) {
 	Evtmapper_binding *newbinding = new Evtmapper_binding;
 
 	newbinding->type=binding_joybutton;
@@ -53,7 +53,7 @@ void Evtmapper_bindings::add_joybuttonbinding(int joystick, int button, int cmdf
 	push_back(newbinding);
 }
 
-void Evtmapper_bindings::add_mousebuttonbinding(int button, int cmdfunction, char *config_name, char *display_name) {
+void Evtmapper_bindings::add_mousebuttonbinding(int button, int cmdfunction, const char *config_name, const char *display_name) {
 	Evtmapper_binding *newbinding = new Evtmapper_binding;
 
 	newbinding->type=binding_mousebutton;
