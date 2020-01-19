@@ -1,0 +1,165 @@
+#!/usr/bin/env python
+##
+## Changed 2005-03-17 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+## 	- Replace True and False by defined variables true and false, because
+##	  these are too new features in phyton.
+##	- Fix it not to crash if path turns out to be nil in Glob.
+##	- Collect targets from subscripts.
+##
+
+import os
+import glob
+import string
+import sys
+
+# True and False are so new that better not use them...
+true = 1
+false = 0
+
+if sys.platform == 'win32':
+	appname = 'nil.exe'
+else:
+	appname = 'nil'
+
+env = Environment()
+
+if ARGUMENTS.get('help', 0):
+	print("Possible options:")
+	print(" debug=1:     enable debugging")
+	print(" profile=1:   enable profiling (enables debugging)")
+	print(" optimize=1:  enable optimaziation (enables debugging)")
+	Exit(1)
+
+if ARGUMENTS.get('profile', 0):
+	env.Append(CCFLAGS = '-g -pg -O0 -Wall')
+else:
+	if ARGUMENTS.get('debug', 0):
+		env.Append(CCFLAGS = '-g -O0 -Wall')
+	else:
+		stripping = true
+		if ARGUMENTS.get('optimize', 0):
+			env.Append(CCFLAGS = '-O3')
+		else:
+			env.Append(CCFLAGS = '-O2')
+
+
+
+
+
+def CheckSDLConfig(context, minVersion):
+	context.Message('Checking for sdl-config >= %s... ' % minVersion)
+	from popen2 import Popen3
+	p = Popen3(['sdl-config', '--version'])
+	ret = p.wait()
+	out = p.fromchild.readlines()
+	if ret != 0:
+		context.Result(false)
+		return false
+	if len(out) != 1:
+		# unable to parse output!
+		context.Result(false)
+		return false
+	# TODO validate output and catch exceptions
+	version = map(int, out[0].strip().split('.'))
+	minVersion = map(int, minVersion.split('.'))
+	# TODO comparing versions that way only works for pure numeric version
+	# numbers and fails for custom extensions. I don't care about this at
+	# the moment as sdl-config never used such version numbers afaik.
+	ret = (version >= minVersion)
+	if ret == false:
+		context.Result(false)
+		return false
+	
+	context.Result(true)
+	context.env.ParseConfig('sdl-config --cflags --libs')
+	return true
+
+def CheckPKGConfig(context, package, minVersion):
+	context.Message('Checking for %s >= %s... ' % (package, minVersion))
+	from popen2 import Popen3
+	p = Popen3(['pkg-config', '--atleast-version=' + minVersion, package])
+	ret = p.wait()
+	if ret != 0:
+		context.Result(false)
+		p = Popen3(['pkg-config', '--modversion', package])
+		ret = p.wait()
+		out = p.fromchild.readlines()
+		context.Display('Expected at least version %s, found %s.' 
+			% (minVersion, out))
+		return false
+	
+	# read flags...
+	context.Result(true)
+	context.env.ParseConfig('pkg-config --cflags --libs %s' % package)
+	return true
+
+def Glob(pattern):
+	path = GetBuildPath('SConscript').replace('SConscript', '')
+
+	result = []
+	for i in glob.glob(path + pattern):
+		name = ''
+		if path != '':
+			name = i.replace(path, '')
+		else:
+			name = i
+		result.append(name)
+        return result
+
+conf = Configure(env, custom_tests = {
+	'CheckSDLConfig' : CheckSDLConfig,
+	'CheckPKGConfig' : CheckPKGConfig
+	})
+
+if not conf.CheckSDLConfig('1.2.4'):
+	print "Couldn't find libSDL >= 1.2.4"
+	Exit(1)
+if not conf.CheckLib('SDL_mixer'):
+	print "Couldn't find SDL_mixer library!"
+	Exit(1)
+if not conf.CheckLib('SDL_image'):
+	print "Couldn't find SDL_image library!"
+	Exit(1)
+if not conf.CheckLib('SDL_ttf'):
+	print "Couldn't find SDL_ttf library!"
+	Exit(1)
+if not conf.CheckLib('libz'):
+	print "Couldn't find SDL_gfx library!"
+	Exit(1)
+
+
+env.Export(["env", "Glob"])
+env.Append(CPPPATH = "#")
+env.SourceSignatures('MD5')
+
+source       = []
+source       = source       + Glob("nil_main.cpp")
+clientsource = []
+clientsource = clientsource + Glob("nil_main_client.cpp")
+serversource = []
+serversource = serversource + Glob("nil_main_server.cpp")
+
+clientobjs = SConscript('client/SConscript')
+commonobjs = SConscript('common/SConscript')
+serverobjs = SConscript('server/SConscript')
+
+cpiobuild = Builder(action = 'ld -r -o $TARGET --format=binary $SOURCE')
+env['BUILDERS']['Cpiobuild'] = cpiobuild
+
+env.Append(LIBPATH = ['.'])
+env.Append(LIBS = ['z','SDL_mixer','SDL_image','SDL_ttf'])
+
+source       = source       + clientobjs + commonobjs + serverobjs
+clientsource = clientsource + clientobjs + commonobjs
+serversource = serversource              + commonobjs + serverobjs
+
+# link with builtin.cpio
+source       = source       + env.Cpiobuild(target='builtin.o', source='builtin.cpio', )
+clientsource = clientsource + env.Cpiobuild(target='builtin.o', source='builtin.cpio', )
+serversource = serversource + env.Cpiobuild(target='builtin.o', source='builtin.cpio', )
+
+env.Program(target = appname,        source = source,       LDFLAGS='-rdynamic')
+#env.Install('/usr/bin', appname)
+#env.Alias('install', '/usr/bin')
+#env.Program(target = "nil-client", source = clientsource, LDFLAGS='-rdynamic')
+#env.Program(target = "nil-server", source = serversource, LDFLAGS='-rdynamic')

@@ -1,0 +1,23 @@
+#
+# Changed 2005-03-17 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Make it return what library returns, so it will build properly
+#	- Add retruns from subscripts to array and build that.
+#	- Use object instead of library, so link works.
+#
+
+Import('*')
+
+objects = []
+objects = objects + SConscript('configuration/SConscript')
+objects = objects + SConscript('console/SConscript')
+objects = objects + SConscript('objects/SConscript')
+objects = objects + SConscript('serializer/SConscript')
+objects = objects + SConscript('smartpointer/SConscript')
+objects = objects + SConscript('sound/SConscript')
+objects = objects + SConscript('timer/SConscript')
+objects = objects + SConscript('vfs/SConscript')
+objects = objects + SConscript('net/SConscript')
+
+source = Glob("*.cpp")
+objects = objects + env.Object(source = source)
+Return('objects')

@@ -1,0 +1,59 @@
+# This is Free software, refer to the GPL for license terms.
+# 
+# Syntax:
+# NOTE: Only use a single tab character for seperating parameters
+#
+# Filenames:
+#		aiming:    <frame>.<direction><aim code>.rgbf
+#		notaiming: <frame>.rgbf
+# 
+# aimangle	<angle>	<aim code>
+#		<angle>	elevation angle in degrees
+#		<aim code> the string that goes into the filename
+#
+# flip <right/left/no>
+#		tells the animator wether it should flip aimframes to get the mirror image
+#		and if so what side we have already
+#		
+# sequence	<name>	<goto label>
+#		<name> The name of the sequence (each user of the Animator class have its own sequences)
+#		<goto label> The label to goto to start this sequence
+#
+# label	<goto label>
+#		<goto label> The name of this goto target
+#
+# aimframe	<frame>	<aim/noaim> <ms delay>
+#		<frame> becomes part of the filename
+#		<aim/noaim> tells the system wether it should stick on the <direction><aim code> part
+#		<ms delay> The duration of this frame
+#		The filename used is: <frame>.<direction><aim code>.rgbf
+#
+# frame	<frame>	<aim/noaim> <ms delay>
+#		<frame> becomes part of the filename
+#		<aim/noaim> tells the system wether it should stick on the <direction><aim code> part
+#		<ms delay> The duration of this frame
+#		The filename used is: <frame>.rgbf
+#
+# goto	<goto label>
+# 	guess.
+#
+# stop
+#		what it says.
+#
+###########################################################
+
+
+###########################################################
+# Declare the sequences we have
+sequence	init	init_start
+
+
+###########################################################
+# standing + init
+label	init_start
+frame	turn0	noaim	100
+frame	turn1	noaim	100
+frame	turn2	noaim	100
+frame	turn3	noaim	100
+goto	init_start
+

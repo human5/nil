@@ -1,0 +1,42 @@
+#!/bin/sh
+# Configure script for NiL isn't Liero
+
+####    
+# Main script
+####    
+        
+echo "+-------------------------------------------------------+"
+echo "I         NiL isn't Liero - configure script            I"
+echo "I            written by Christoph Brill                 I"
+echo "+-------------------------------------------------------+"
+
+#FIXME: Currently we don't forwand configure options, that's wrong!"
+
+CURRENTPATH=`pwd`
+cd ${CURRENTPATH}/src && ./configure --subcall
+cd ${CURRENTPATH}/utils && ./configure --subcall
+cd ${CURRENTPATH}
+
+echo "CURRENTPATH=`pwd`" > Makefile
+echo "" >> Makefile
+echo "nil:" >> Makefile
+echo "	@cd src && make all" >> Makefile
+echo "utils:" >> Makefile
+echo "	@cd utils && make all" >> Makefile
+echo "all:" >> Makefile
+echo "	nil utils" >> Makefile
+echo "clean:" >> Makefile
+echo "	@cd \$(CURRENTPATH)/utils && make clean" >> Makefile
+echo "	@cd \$(CURRENTPATH)/src && make clean" >> Makefile
+
+echo "========================================================="
+echo "Configure script successfully ended."
+echo ""
+SYSTEM=`uname -s`       
+if test $SYSTEM = "FreeBSD"
+then
+        echo "Now, type \"gmake\" for compiling the software."
+else
+        echo "Now, type \"make\" for compiling the software."
+fi
+

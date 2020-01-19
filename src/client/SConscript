@@ -1,0 +1,21 @@
+#
+# Changed 2005-03-17 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Make it return what library returns, so it will build properly
+#	- Add retruns from subscripts to array and build that.
+#
+
+Import('*')
+
+objects = []
+objects = objects + SConscript('animation/SConscript')
+objects = objects + SConscript('console/SConscript')
+objects = objects + SConscript('controls/SConscript')
+objects = objects + SConscript('event/SConscript')
+objects = objects + SConscript('fonts/SConscript')
+objects = objects + SConscript('graphics/SConscript')
+objects = objects + SConscript('menu/SConscript')
+
+source = Glob("*.cpp")
+objects = objects + env.Object(source = source)
+Return('objects')
+

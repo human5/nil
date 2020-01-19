@@ -1,0 +1,30 @@
+# scons script for NiL isn't Liero (utils/rgbf)
+# See www.scons.org for details
+
+#
+# This file is part of NiL.
+# Copyright (C) 2004 Christoph Brill <egore@users.sourceforge.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#print "building rgbf<->png converter"
+
+env = Environment()
+env.SourceSignatures('MD5')
+
+env.Program(target = 'png2rgbf', LIBS = 'png', source = Split('png2rgbf.cpp read-png.cpp write-rgbf.cpp'))
+
+env.Program(target = 'rgbf2png', LIBS = 'png', source = Split('rgbf2png.cpp read-rgbf.cpp write-png.cpp'))

@@ -1,0 +1,35 @@
+# scons script for NiL isn't Liero (src/common/serializer)
+# See www.scons.org for details
+
+#
+# This file is part of NiL.
+# Copyright (C) 2004 Christoph Brill <egore@users.sourceforge.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#
+# Changed 2005-03-17 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Make it return what library returns, so it will build properly
+#	- Use object instead of library, so link works.
+#
+
+#print "building common/serializer"
+
+Import('*')
+
+source = Glob("*.cpp")
+result = env.Object(source = source)
+Return('result')

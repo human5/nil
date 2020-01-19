@@ -1,0 +1,91 @@
+# This is Free software, refer to the GPL for license terms.
+# 
+# Syntax:
+# NOTE: Only use a single tab character for seperating parameters
+#
+# Filenames:
+#		aiming:    <frame>.<direction><aim code>.rgbf
+#		notaiming: <frame>.rgbf
+# 
+# aimangle	<angle>	<aim code>
+#		<angle>	elevation angle in degrees
+#		<aim code> the string that goes into the filename
+#
+# flip <right/left/no>
+#		tells the animator wether it should flip aimframes to get the mirror image
+#		and if so what side we have already
+#		
+# sequence	<name>	<goto label>
+#		<name> The name of the sequence (each user of the Animator class have its own sequences)
+#		<goto label> The label to goto to start this sequence
+#
+# label	<goto label>
+#		<goto label> The name of this goto target
+#
+# aimframe	<frame>	<aim/noaim> <ms delay>
+#		<frame> becomes part of the filename
+#		<aim/noaim> tells the system wether it should stick on the <direction><aim code> part
+#		<ms delay> The duration of this frame
+#		The filename used is: <frame>.<direction><aim code>.rgbf
+#
+# frame	<frame>	<aim/noaim> <ms delay>
+#		<frame> becomes part of the filename
+#		<aim/noaim> tells the system wether it should stick on the <direction><aim code> part
+#		<ms delay> The duration of this frame
+#		The filename used is: <frame>.rgbf
+#
+# goto	<goto label>
+# 	guess.
+#
+# stop
+#		what it says.
+#
+###########################################################
+
+
+###########################################################
+#Set up the aimframes:
+aimangle	45.0	6
+aimangle	67.5	5
+aimangle	90.0	4
+aimangle	112.5	3
+aimangle	135.0	2
+aimangle	157.5	1
+aimangle	180.0	0
+
+
+###########################################################
+# We have the right direction, but not the left,
+# tell the animator to load the 
+flip	right
+
+
+###########################################################
+# Declare the sequences we have
+sequence	init	init_start
+sequence	stop	stop_start
+sequence	walk	walk_start
+sequence	jump	jump_start
+
+
+###########################################################
+# Walk code, simply cycle the walk frames we have
+label	walk_start
+frame	walk2	aim	100
+frame	walk1	aim	100
+frame	walk3	aim	100
+frame	walk1	aim	100
+goto	walk_start
+
+###########################################################
+# standing + init
+label	init_start
+frame	walk2	aim	10
+label	stop_start
+stop
+
+###########################################################
+# The jump code, simple innit? this just freezes in the previous frame
+label	jump_start
+frame	walk3	aim	100
+stop

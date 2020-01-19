@@ -1,0 +1,138 @@
+This is a short overview of the most important classes in NiL.
+
++-----------------------------------------------------------------------------
+| World classes
++-----------------------------------------------------------------------------
+
+* Main classes: World, Serverworld, Clientworld, Obj_base, Obj_*
+
+All the objects in the game inherit from Obj_base and are called Obj_* they
+all live in a World, which is either a Serverworld or a Clientworld.
+
+The Obj_* classes all server_think() in the think loop on the server, this
+makes some of the objects dirty and the dirty objects then have their states
+serialized into a single package of updates for the clients.
+
+To save the data transfered all the objects also client_think() both on the
+client and on the server, on the server server_think() must call client_think()
+and only if object state is changed outside client_think() the object becomes
+dirty.
+client_think() handles falling because of gravity and other such trivial
+matters, but the only rule for what can happen in client_think() is that it
+MUST be non-random.
+
+To save server and net load some objects only exist on the client, these are
+handled sepperatly from the real object and are called anonymous objects as
+they havn't got an objectid like the real objects.
+
+Anonymous objects must not modify the earth-ness of map pixels or other
+objects, but it may change the color of map pixels (blood does this).
+
+Anonymous objects are all mostly for show, for examples take a look at the
+Obj_particle_* classes.
+
+
++-----------------------------------------------------------------------------
+| Network classes
++-----------------------------------------------------------------------------
+
+* Main classes: Tcp_socket, Tcp_server, Tcp_server_connection, Tcp_client.
+
+Tcp_server: Encapsulates the listening socket.
+
+Tcp_socket: Parent of Tcp_server_connection and Tcp_client,
+ provides send and recv for Serializer_*, Serializable classes as well as
+ raw buffers.
+
+Tcp_server_connection: Encapsulates the accepted connection on the servers side.
+
+Tcp_client: Encapsulates a connected socket on the client side.
+
+
++-----------------------------------------------------------------------------
+| Graphics classes
++-----------------------------------------------------------------------------
+
+* Main classes: Raw_surface, Graphic, Viewport.
+
+The Raw_surface class provides a lot of practical drawing functions for
+drawing into a 32bpp buffer, the class can either attach to a buffer managed
+by another class (maybe a lock()ed PTC surface) or it can manage it's own
+pixels.
+
+All drawing in NiL happens to a Raw_surface.
+
+The Graphic class and the Viewport class are both children of Raw_surface.
+
+
++-----------------------------------------------------------------------------
+| Animations classes
++-----------------------------------------------------------------------------
+
+* Main classes: Animation, Animator, Animations, Anim_*
+
+An animation is loaded by and stored in, an Animation object.
+Once an object needs to animate something (like the skin of an avatar) it
+creates an Animator object from an Animation and then the Animator object
+handles all the running of the animation (using data directly from the
+Animation object)
+
+The Animations class is the Animation chache which along with the Graphics
+cache and the Font cache is a member of Loader (that way you always have
+access to the highlevel caches once you have access to the basic loader.
+
+The Anim_* classes are only used inside Animator and Animation, don't worry
+about them.
+
+
++-----------------------------------------------------------------------------
+| Serialization classes
++-----------------------------------------------------------------------------
+
+* Main classes: Serializable, Serializer, Serializer_reader, Serializer_writer
+
+Serializing an object turns the objects state into a dead lump of data that can
+be passed over networks and turned into object state again at the other end.
+
+For an object to be serializable in NiL it must inherit from the Serializable
+class:
+
+class Serializable {
+public:
+  virtual void serialize(Serializer *serializer)=0;
+};
+
+and it must then implement the serialize() function, like this example:
+
+virtual void serialize(Serializer *serializer) {
+  serializer->rw(color);
+  serializer->rwstr(name,sizeof(name));                           
+}
+
+The serializer will then either be a Serializer_reader or the Serializer_writer
+class and dependant on which class is passed into the serialize function it
+will either be reading the objects state or writing it, most objects don't have
+to do anything other than call serializer->rw() on all it's member variables.
+
+For really simple examples take a peek at the netpackets.h file.
+
+The really good reason for using the Serializ* classes is that Serializable
+classes are really easy to send and recv from the network (see the TCP classes)
+
+Endian-conversion should be isolated to the Serializers children, but it isn't
+done yet.
+
+
++-----------------------------------------------------------------------------
+| UI classes
++-----------------------------------------------------------------------------
+
+Main classes: Keymapper, Keymapper_bindings.
+
+The UI classes are here to adapt SDL's interface to something that is eaiser
+to use in NiL.
+
+
+
+
+

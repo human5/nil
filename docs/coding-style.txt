@@ -1,0 +1,127 @@
+
+These are a few of the rules that I have tried to follow coding NiL:
+
+* Naming conventions:
+ - Types are Capitalized.
+    Wrong:   class mouse
+    Correct: class Mouse
+   
+ - Constants are ALL CAPS.
+    Wrong:   const int lt_debug=1;
+    Correct: const int LT_DEBUG=1;
+ 
+ - Everything else is all lower case.
+    Wrong:   int Things();
+    Correct: int things();
+ 
+ - Combined words are separated by _ NOT by caps.
+    Wrong:   int doThingsNow();
+    Wrong:   int dothingsnow();
+    Correct: int do_things_now();
+  
+ - Don't shorten words, type it all out.
+    Wrong:   bool kb_init;
+    Correct: bool keyboard_initialized;
+
+
+* Indention:
+ - Use tabs at the start of line for indentation.
+
+ - If not at start of line use spaces.
+
+ - Use One True Bracket Style:
+
+  This is wrong:
+   if (42)
+   {
+      do_things();
+   }
+   else
+   {
+      do_other_things();
+   }
+
+  This is wrong:
+   if (42)
+    {
+      do_things();
+    }
+   else
+    {
+      do_other_things();
+    }
+
+  This is correct:
+   if (42) {
+      do_things();
+   } else {
+      do_other_things();
+   }
+
+
+* Documentation:
+ - Use Doxygen compatible syntax in all header files for all functions
+   and all classes
+ - Document the parameters and the return of a function
+
+ WRONG:
+ class my_class {
+   char my_function1(int parameter1, bool parameter2);
+ };
+
+ CORRECT:
+ //! @author your_name_here
+ //! @brief A_short_description_of_the_class
+ class my_class {
+   /*! This function is great and does this and that and is able to
+       rule the world... well maybe not
+       @param parameter1 This is the great integer parameter
+       @param parameter2 This is the also great bool parameter
+       @return Returns an 'a' */
+   char my_function1(int parameter1, bool parameter2);
+ };
+    
+ - Document changes in the header of each file and in the ChangeLog (see
+   ChangeLog for exact format of doing this.
+
+   EXAMPLE FOR A HEADER OF A SOURCEFILE:
+   /***************************************************************************
+     name_of_this.cpp - Short description (optional).
+     --------------------------------------------------------------------------
+     begin                : YYYY-MM-DD
+     by                   : YOUR_NAME (yourm@iladdr.es)
+
+     last changed         : YYYY-MM-DD
+     by                   : YOUR_NAME (yourm@iladdr.es)
+     changedescription    : This has been changed to be bigger and better and
+                            super and everything
+
+     copyright            : (C) 2004 by YOUR_NAME (yourm@iladdr.es)
+
+   ***************************************************************************/
+
+ - "begin" section is added when writing this file, so is copyright
+ - a "last changed" section is added every time you do a major change to
+   the file (i.e. if you add a new funcitonality)
+ - copyright changes are ONLY allowed by the copyright owner, as long as the
+   do not conflict with GPL
+
+* Misc:
+ - Try to move the actual #includes to the .cpp files,
+   this limits overall compile time (especially with STL headers)
+   and also limits the number of files that need to be recompiled
+   when a header file changes:
+
+   In the case of classes do this:
+
+   class Other_class;
+   class My_class {
+      ...
+      Other_class *other_instance;
+      ...
+   }
+
+   and then other_instance = new Other_class; in the contructor of My_class.
+
+ - If a line is commented out, enter in the line above:
+   //! YYYY-MM-DD, @user: @reason

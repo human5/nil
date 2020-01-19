@@ -1,0 +1,361 @@
+Changelog for NiL
+
+	-----------------------------------------------------------
+Notice about NiL Changelog usage and formatting.
+Please use ONLY the following formatting in this Changelog:
+ @DATE @PERSON
+ 	* @CHANGE
+
+	@DATE is date of commiting to CVS (changes that are not commited to
+	CVS should NEVER be added to Changelog). Local time is ok.
+
+	@PERSON is the full REAL name of the one commiting to CVS (not necceserely
+	the code author). If you wish to add your nick/handle, add it after your
+	name in parenthesis.
+
+	@CHANGE is a short description of the modification done. If you are not
+	the author of parts/all of the code, add note about the original author
+	in parenthesis.
+
+ALWAYS keep line lenghts UNDER/AT 80 characters.
+
+	-----------------------------------------------------------
+
+16/05/2005 Christoph Brill (egore
+	* gcc4 warning fixes
+	* less output for mouse and warning fix
+	* segfault fix for 0 joysticks
+
+24/03/2005 Harri Ilari Tapio Liusvaara (ilari)
+	* make scons work
+	* enhance vfs
+
+24/03/2005 Christoph Brill (egore)
+	* add checks in scons for zlib and some SDL libs
+
+06/03/2005 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* major rework of the vfs
+
+16/01/2005 Christoph Brill (egore)
+	* make use of get_text_geom()'s return value
+
+15/01/2005 Christoph Brill (egore)
+	* make use of event_target's methods
+
+13/01/2005 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* vfs update (changes for pathexpander)
+
+13/01/2005 Christoph Brill (egore)
+	* joystick support
+	* mouse support
+
+12/01/2005 Christoph Brill (egore)
+	* move keymapper to client
+	* move Strless to misc.h
+	* compile fix for object.h
+	* make use of events properly
+	* direcotry move src/common/controls to src/client/controls
+	* miscelanious fixes I forgot
+
+06/01/2005 Christoph Brill (egore)
+	* centered menu
+
+05/01/2005 Christoph Brill (egore)
+	* directory move
+
+04/01/2005 Christoph Brill (egore)
+	* Code and API cleanup
+	* Begin of direcotry move (starting with net)
+
+03/01/2005 Christoph Brill (egore)
+	* API and code cleanup
+
+14/12/2004 Christoph Brill (egore)
+	* GCC 3.4 fix for joysticks
+
+14/12/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* re-keymapping for all keys now allows
+	* configure script
+	 * fixed circular dependecy problem
+	 * changed from objdump to ld
+
+21/11/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* add CPIO maker
+	* update rgbf<->png converter
+
+20/11/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* fix gzip/bzip2 and lump-loading double-free vulnerabilities
+
+18/11/2004 Christoph Brill (egore)
+	* replace Makefiles by configure files for whole NiL
+
+18/11/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* add new graphics converters
+	 * png2rgbf
+	 * rgbf2png
+
+11/11/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* new console wiring
+	 * nilConsole slave
+	 * stdout slave
+
+11/11/2004 Christoph Brill (egore)
+	* removed World's isPassable, and renamed isPassableCheck to
+	  isPassable
+
+11/09/2004 Christoph Brill (egore)
+	* Doxygen updated
+	 * @param and @return introduction
+	 * some descriptions added
+
+11/06/2004 Christoph Brill (egore)
+	* configure autodetection fix
+	* Doxygen updates
+	* new constructor in fonts.h
+	* minor API cleanups
+
+10/23/2004 Christoph Brill (egore)
+	* added submenus
+
+10/23/2004 Christoph Brill (egore)
+	* enhanced menu code
+	* fix console buffer overflow
+
+10/23/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* add new console base (not used yet)
+
+10/23/2004 Christoph Brill (egore)
+	* fixed font loading code (thanks to ilari)
+
+10/23/2004 Christoph Brill (egore)
+	* add missing entry to ./congigure --help
+	* make NiL compile with -Wall (one issue remaining)
+	* add -Wall to default ./configure
+
+10/22/2004 Christoph Brill (egore)
+	* first steps towards a menu
+
+09/25/2004 Christoph Brill (egore)
+	* patches from TPC on #nil
+	 * gcc 3.4 fixes
+	* configure fix
+
+09/24/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* moved logging from fluff.cpp to logmsg.cpp
+	* change logging funktion to iostream
+	* enhanced configure for building cpio file
+	* include SDL-headers via systemheaders.h
+	* add suport for builtin lumps
+	* limit cpio memory allocation
+
+09/23/2004 Christoph Brill (egore)
+	* enhanced configure for --enable-profiling
+
+09/09/2004 Christoph Brill (egore)
+	* adjusted plasmagun
+
+09/08/2004 Christoph Brill (egore)
+	* fixed randomizer
+
+09/08/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* fixed lump creation
+	 * allocate only memory we need
+	 * open the file in binary mode
+
+09/08/2004 Christoph Brill (egore)
+	* added sound for the railgun
+
+09/08/2004 Phil Howlett (phowlett)
+	* added double buffering support
+	  This should remove the screen flickering under video displays
+	  that are using Hardware acceleration. Quite noticable under
+	  win32 machines with fancy video cards.
+
+09/07/2004 Christoph Brill (egore)
+	* enhanced Inno Setup Script
+	 * german localization
+	 * spelling fixes
+	 * added shortcur for bot
+	 * cut into components main, data and docs
+	 * added URL
+
+09/07/2004 Phil Howlett (phowlett)
+	* added Inno Setup Script for win32 installation
+	* added documentation for win32 compilation
+	* added NiL icon (quite ugly)
+	* added default NiL configuration file
+
+09/07/2004 Christoph Brill (egore)
+	* use SDL_GetError() in view_rgbf.cpp
+
+09/04/2004 Christoph Brill (egore)
+	* fix different uninitialized values
+
+09/03/2004 Christoph Brill (egore)
+	* reintroduced weapons
+	 * all expect railgun
+	 * fixed owner id issues
+	* tried fixing collision detection
+
+08/26/2004 Harri Ilari Tapio Liusvaara (hliusvaa)
+	* Attached is patch to rewrite NiL VFS.
+	* New features
+	 * Use new SVR4 without CRC CPIO archive format as lumps
+	   (GNU CPIO can now pack and unpack lump files)
+	 * GZIP/BZIP2 compressed lump decompression on load
+	   (new code can load lumps compressed with GZIP or BZIP2)
+	 * Use Mmap always if possible
+	* Attached is patch to rewrite NiL VFS.
+	* New features
+	 * Use new SVR4 without CRC CPIO archive format as lumps
+	   (GNU CPIO can now pack and unpack lump files)
+	 * GZIP/BZIP2 compressed lump decompression on load
+	   (new code can load lumps compressed with GZIP or BZIP2)
+	 * Use Mmap always if possible
+	   (GNU CPIO can now pack and unpack lump files)
+	 * GZIP/BZIP2 compressed lump decompression on load
+	   (new code can load lumps compressed with GZIP or BZIP2)
+	 * Use Mmap always if possible
+	 * Use new SVR4 without CRC CPIO archive format as lumps
+	   (GNU CPIO can now pack and unpack lump files)
+	 * GZIP/BZIP2 compressed lump decompression on load
+	   (new code can load lumps compressed with GZIP or BZIP2)
+	 * Use Mmap always if possible
+	   (now files loaded from directories are mmapped too
+	   (makes /proc/<pid>/maps quite long). Obiviously,
+	   compressed lumps can't be mmapped.)
+	 * Enhance exception class
+	   (Exception class can now throw messages with variable
+	   messages and contexts.)
+	 * Mmapper and memory_arena abstractions
+	   (Introduce new abstractions memory arena and Mmapping.
+	   These form the entiere basis of new loader code.)
+	* Other fixes
+	 * Fix segfault in acceptloop
+	   (If server gets into "accept loop" (nasty heisenbug /
+	   mandelbug), it would segfault as tcp_server_connection
+	   won't cope with destructing connection that doesn't
+	   have accepted connection. This patch fixes it so instead
+	   of destructing tcp_server_connections on accept failure,
+	   it stores the object and uses it next time.)
+	 * Don't recurse in console draw
+	   (If console draw prints something, it will be re-entered.
+	   Unfortunately, these conditions often aren't transistent,
+	   so infinite recursion is very much a possiblity.)
+	 * Don't print last OS error in logmsg()
+	   (It is a) Annoying, b) should be present in message anyway
+	   if its signaficant, c) lost almost all signaficance in VFS
+	   rework.)
+	 * Change save_lump API to return number of bytes that would
+	   be required. (Now save_lump can be invoked without doing
+	   estimates of required buffer size.)
+	 * Protect console from maliscous escapes
+	   (Fix arbitrary command execution hole.)
+
+08/15/2004 Christoph Brill (egore)
+	* fixed THREAD_OBJS (thanks to Mike Lemmon for pointing this
+	  out to me)
+
+06/16/2004 Christoph Brill (egore)
+	* fixed configure script bug, that allowed to install without
+	  any needed libraries installed
+
+06/02/2004 Christoph Brill (egore)
+	* some cleanups to raw_surface class (including doxygen support
+	  and some logging)
+
+05/17/2004 Christoph Brill (egore)
+	* added Intel C Compiler support (which make the game run a lot
+	  faster)
+
+05/16/2004 Christoph Brill (egore)
+	* added console toggeling support (F1)
+	* some minor cleanups
+	* doxygen support enhancements
+	* new function getShowConsole to get the status whether the console
+	  is shown or not
+	* added benchmarking before starting the game as option
+	
+05/05/2004 Christoph Brill (egore)
+	* added coloredblood as option (will set the blood color to
+	  color of the worm or to red)
+	* set aim direction from 0 to PI (was PI/8 to PI)
+	* set default aim to PI/2
+
+31/03/2004 Christoph Brill (egore)
+	* added more support for doxygen (still far from complete)
+	* set some useful keys for player 2
+
+29/03/2004 Christoph Brill (egore)
+	* added some support for doxygen (far from complete)
+
+21/03/2004 Nils Thuerey (dmncllr)
+	* Additions
+	 * Added team mode
+	 * Added AI
+	 * Added invisibility
+	 * Added homing missiles
+	* Cleanups
+	 * Removes all.h
+	 * simpler random generator
+	 * renaming from obj_player.cpp|h to obj_player_avatar.cpp|h
+
+17/02/2004 Christoph Brill (egore)
+	* Added a configure file
+	
+11/02/2004 Christoph Brill (egore)
+	* Added Patchset from Harri Ilari Tapio Liusvaara
+	 * replaced Loader::getfilename() with Loader::getrwops() which should
+	   reanble lumps
+	 * fix memory leak if accepting connection fails
+	 * added (unused) exception class
+
+29/01/2004 Christoph Brill (egore)
+	* enhancement for weapon.cpp / weapon.h to store shared properties
+	* enhancement of chat to support a menu (by setting active_mode)
+
+27/01/2004 Christoph Brill (egore)
+	* disable fps display now possible
+
+25/01/2004 Christoph Brill (egore)
+	* Added Patch by Nils Thurey (dmcllr) which contains the following
+	 * fixed weapon pushback wrong direction when fast
+	 * fixed backspace when chatting, no invalid chars, cursor?
+	 * fixed graphic_bar :: setpos when dead wrong
+	 * fixed joining error
+	 * fixed score display error of display kills/deaths/ratio?
+	 * fixed dont do collision/display hook for dead players
+	 * fixed graphics bug (blend&pointer update at the same time didnt work)
+	 * when server leaves kick all clients
+	 * found graphics bar segfault (wrong x clipping in draw vert. line)
+	 * dont make everything dirty at beginning?
+	 * players dont hit themselves with weapons
+	 * enhanced bouncing
+	 * added colored blood
+	 * added "map_stuff" option (how much holes,stones etc. in the level)
+	 * added "gorelevel" option (change blood amount from command line)
+	 * added delay before respawning players
+	 * fixed memory leak: Graphics need to delete the surface they contain
+	   in the destructor!
+	 * added chatting (press enter during game to start a new message)
+	 * added join/quit server messages
+	 * fixed joining error (all objects are now sent once during joining)
+	 * added scoreboard display (+init, remove players)
+	 * nil now compiles with MinGW added HowTo
+	 * changed default weapon init, and configuration preset inits
+	 * removed barrel length, added checks for bullets leaving owners
+	   (mLeaveOwnerID) in hit_object
+	 * improved bogo_bounce speed reflection (seems to get rid of most
+	   stuck-players-problem)
+	 * server makes players leave before shutting down and catches exit signals
+	   (with timeout)
+	 * added system message display in console
+	 * fixed graphics errors when compiling with gcc 3.x
+	* Added Patch by ???? (TOM&UWE) which contains the following things
+	 * added jetpack weapon
+	 * restricted rope length
+	* Changed sourcetree
+	 * Cleaned tree from KDevelop
+	 * reordered data and moved to seperate folder
+	 * moved utils (currently untested) to seperate folder
+	 * Added Patch by Colin Leroy (colinleroy) for bigendian

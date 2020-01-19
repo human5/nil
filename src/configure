@@ -1,0 +1,590 @@
+#!/bin/sh
+# Configure script for NiL isn't Liero
+
+#
+#
+# This file is part of NiL.
+# Copyright (C) 2004 Christoph Brill <egore@users.sourceforge.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#
+# Modified 2004/08/03 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Add support for detecting presence of LIBBZ2.
+#	- Limit depth of source file search to 1.
+#	- Sort source file list.
+#
+# Modified 2004/09/06 by egore <egore@gmx.de>
+#	- enhance detection for return values
+#	- better diagnostic messages in case of errors
+#
+# Modified 2004/09/22 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Modify to build builtin CPIO archive in executable.
+#
+# Modified 2004/09/23 by egore <egore@gmx.de>
+#	- enhance configure for --enable-profiling
+#
+# Modified 2004/12/13 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- I discovered superrior method of creating objects out of
+#	  binaries, use it instead of current one (drops dependency
+#	  to GNU objcopy but adds one to GNU ld).
+#	- Fix annoying circular dependency message.
+#
+
+####
+# Check configuration
+####
+check_config() {
+	if check_command g++; then
+		COMP_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU C Compiler installed."
+		echo "ERROR: Take a look at http://gcc.gnu.org/ to get it."
+		help_comp;
+	fi
+	
+	if test $SYSTEM = "FreeBSD"
+	then
+		if check_command gmake; then
+			MAKE_EXE=$COMM
+		else
+			echo "ERROR: You need the GNU make installed."
+			echo "ERROR: Take a look at http://www.gnu.org/software/make/ to get it."
+			help_comp;
+		fi
+	else
+		if check_command make; then
+			MAKE_EXE=$COMM
+		else
+			echo "ERROR: You need the GNU make installed."
+			echo "ERROR: Take a look at http://www.gnu.org/software/make/ to get it."
+			help_comp;
+		fi
+	fi
+
+	if check_command ar; then
+		AR_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU ar (a member of binutils) installed."
+		echo "ERROR: Take a look at http://www.gnu.org/software/binutils/ to get it."
+		help_comp;
+	fi
+
+	if check_command ld; then
+		LD_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU ld (a member of binutils) installed."
+		echo "ERROR: Take a look at http://www.gnu.org/software/binutils/ to get it."
+		help_comp;
+	fi
+
+	if check_command ranlib; then
+		RANLIB_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU ranlib (a member of binutils) installed."
+		echo "ERROR: Take a look at http://www.gnu.org/software/binutils/ to get it."
+		help_comp;
+	fi
+	
+	if check_command rm; then
+		RM_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU rm (a member of coreutils) installed."
+		echo "ERROR: Take a look at http://www.gnu.org/software/coreutils/ to get it."
+		help_comp;
+	fi
+	
+	if check_command strip; then
+		STRIP_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU strip (a member of binutils) installed."
+		echo "ERROR: Take a look at http://www.gnu.org/software/binutils/ to get it."
+		help_comp;
+	fi
+	
+	if check_command uname; then
+		UNAME_EXE=$COMM
+	else
+		echo "ERROR: You need the GNU uname (a member of sh-utils) installed."
+		echo "ERROR: Take a look at http://www.gnu.org/software/shellutils/ to get it."
+		help_comp;
+	fi
+	
+	if ! check_lib stdc++ libstdc++.a; then
+		echo "ERROR: You need the GNU stdc++ library installed."
+		echo "ERROR: Take a look at http://gcc.gnu.org/libstdc++/ to get it."
+		help_comp;
+	fi
+
+	if ! check_lib libSDL libSDL.a; then
+		echo "ERROR: You need the SDL library installed."
+		echo "ERROR: Take a look at http://www.libsdl.org/ to get it."
+		help_comp;
+	fi
+
+	if check_command sdl-config; then
+		SDLCONFIG_EXE=$COMM
+	else
+		echo "ERROR: You need the sdl-config (a part of SDL) installed."
+		echo "ERROR: Take a look at http://www.libsdl.org/ to get SDL."
+		help_comp;
+	fi
+	
+	if ! check_lib SDL_mixer libSDL_mixer.a; then
+		echo "ERROR: You need the SDL_mixer enhancement for the SDL library installed."
+		echo "ERROR: Take a look at http://www.libsdl.org/projects/SDL_mixer/ to get it."
+		help_comp;
+	fi
+
+	if ! check_lib SDL_ttf libSDL_ttf.a; then
+		echo "ERROR: You need the SDL_ttf enhancement for the SDL library installed."
+		echo "ERROR: Take a look at http://www.libsdl.org/projects/SDL_ttf/ to get it."
+		help_comp;
+	fi
+
+	if ! check_lib SDL_image libSDL_image.a; then
+		echo "ERROR: You need the SDL_image enhancement for the SDL library installed."
+		echo "ERROR: Take a look at http://www.libsdl.org/projects/SDL_image/ to get it."
+		help_comp;
+	fi
+
+        if ! check_lib libz libz.a; then
+                echo "ERROR: You need the zlib library installed."
+                echo "ERROR: Take a look at http://www.gzip.org/zlib/ to get it."
+                help_comp;
+        fi
+
+	if check_lib_optional libbz2 libbz2.a; then
+		HAVE_LIBBZ2=1
+	else
+		HAVE_LIBBZ2=0
+	fi
+
+	OS_TEST=`uname -s | cut -c1-5`
+	if test $OS_TEST = "MINGW"
+	then
+		if ! check_lib winsock libws2_32.a; then
+			echo "ERROR: You need the winsock for MinGW library installed."
+			echo "ERROR: Take a look at http://www.mingw.org/ to get it."
+			help_comp;
+		fi
+	else
+		if ! check_lib pthread libpthread.a; then
+			echo "ERROR: You need the pthread library installed."
+			echo "ERROR: Take a look at http://sources.redhat.com/pthreads-win32/ to get it."
+			help_comp;
+		fi
+	fi
+}
+
+
+####
+# Check for a command
+####
+check_command() {
+	COMM=`which $1`
+	if test -z ${COMM}
+	then
+		echo "Checking for: $1	not found"
+		echo ""
+		return 1
+	else 
+		echo "Checking for: $1	${COMM}"
+		return 0
+	fi
+}
+
+
+####
+# Help about compilation
+####
+help_comp() {
+	echo ""
+	echo "It seems that your system doesn't support compilation."
+	echo "If you are missing a binary or a library, try to install"
+	echo "the needed dependencies. If another error occurs, contact"
+	echo "me at this address : <nil-devel@lists.sourceforge.net>"
+	echo "Exiting."
+	exit;
+}
+
+
+####
+# Check for library
+####
+check_lib() {
+	LIBNAME=$1
+	LIB=`$COMP_EXE -print-file-name=$2 | grep "/"`
+	if test $LIB
+	then
+		echo "Checking for: $LIBNAME		found"
+		return 0;
+	else
+		echo "Checking for: $LIBNAME		not found"
+		echo ""
+		return 1;
+	fi
+}
+
+####
+# Check for optional library
+####
+check_lib_optional() {
+	LIBNAME=$1
+	LIB=`$COMP_EXE -print-file-name=$2 | grep "/"`
+	if test $LIB
+	then
+		echo "Checking for: $LIBNAME (optional)	found"
+		return 0
+	else
+		echo "Checking for: $LIBNAME (optional)	not found"
+		echo ""
+		return 1
+	fi
+}
+
+####
+# Build Makefile
+####
+build_Makefile() {
+	$RM_EXE -f Makefile
+	echo "# NiL isn't Liero" > Makefile
+	echo "# Auto generated Makefile" >> Makefile
+	echo "# Authors : Christoph Brill" >> Makefile
+	echo "#           H. Ilari Liusvaara" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to compiler binary" >> Makefile
+	echo "CC = $COMP_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to make binary" >> Makefile
+	echo "MAKE = $MAKE_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to ar binary" >> Makefile
+	echo "AR = $AR_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to ranlib binary" >> Makefile
+	echo "RANLIB = $RANLIB_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to ld binary" >> Makefile
+	echo "LD = $LD_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to rm binary" >> Makefile
+	echo "RM = $RM_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to strip binary" >> Makefile
+	echo "STRIP = $STRIP_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Path to sdl-config" >> Makefile
+	echo "SDLCONFIG = $SDLCONFIG_EXE" >> Makefile
+	echo "" >> Makefile
+	echo "# Name of output binary" >> Makefile
+	OS_TEST=`uname -n`
+	if test $OS_TEST = "WINDOWS"
+	then
+		echo "BIN = nil.exe" >> Makefile
+	elif test $OS_TEST = "windows"
+	then
+		echo "BIN = nil.exe" >> Makefile
+	else
+		echo "BIN = nil" >> Makefile
+	fi
+	echo "" >> Makefile
+	echo "# Common objects" >> Makefile
+	echo "OBJECTS = $OTHER_OBJS" >> Makefile
+	echo "builtin_cpio.o" >> Makefile
+	echo "" >> Makefile
+	echo "# Thread lib objects" >> Makefile
+	echo "THREADS_OBJECTS = $THREADS_OBJS" >> Makefile
+	echo "$EXC_OBJ" >> Makefile
+	echo "$THREAD_EXCP_OBJ" >> Makefile
+	echo "" >> Makefile
+	echo "# Libraries" >> Makefile
+	OS_TEST=`uname -s | cut -c1-5`
+	if test $OS_TEST = "MINGW"
+	then
+		echo "LIBS = -L. -lws2_32 -lpthread -lsd_threads -liberty \`\$(SDLCONFIG) --libs\` -lSDL_mixer -lSDL_ttf -lSDL_image -lz" >> Makefile
+	elif test $SYSTEM = "FreeBSD"
+	then
+		echo "LIBS = -L. -lsd_threads -lpthread \`\$(SDLCONFIG) --libs\` -lSDL_mixer -lSDL_ttf -lSDL_image -lz" >> Makefile
+	else 
+		echo "LIBS = -L. -lpthread -lsd_threads \`\$(SDLCONFIG) --libs\` -lSDL_mixer -lSDL_ttf -lSDL_image -lz" >> Makefile
+	fi
+	echo "" >> Makefile
+	echo "# Flags" >> Makefile
+	if test $OS_TEST = "MINGW"
+	then
+		echo "CCFLAGS = -D_WIN32_" >> Makefile
+	else
+		echo "CCFLAGS =" >> Makefile
+	fi
+	if test $optimize = 1
+	then
+		ARCH=`uname -m`
+		if test $ARCH != "unknown"
+		then
+			echo "CCFLAGS += -march=$ARCH" >> Makefile
+		fi
+		echo "CCFLAGS += -O3 -fexpensive-optimizations" >> Makefile
+	fi
+	echo "" >> Makefile
+
+	if test $HAVE_LIBBZ2 = "1"
+	then
+		echo "CCFLAGS += -DUSE_LIBBZIP2" >> Makefile
+		echo "LIBS += -lbz2" >> Makefile
+	fi
+
+	if test $debug = 1
+	then
+	echo "all : \$(BIN) done" >> Makefile
+	else
+	echo "all : clean \$(BIN) strip done" >> Makefile
+	fi
+	echo "" >> Makefile
+
+	echo "builtin_cpio.o: builtin.cpio" >> Makefile
+	echo "	@echo -e \"Creating builtin_cpio.o : \\\\c\"" >> Makefile 
+	echo "	@if \$(LD) -r -o builtin_cpio.o --format=binary builtin.cpio 2> .error; then \\" >> Makefile
+	echo "		if test -s .error; then \\" >> Makefile
+	echo "			echo -e \"Created with warnings :\"; \\" >> Makefile
+	echo "			cat .error; \\" >> Makefile
+	echo "			\$(RM) -f .error; \\" >> Makefile
+	echo "		else \\" >> Makefile
+	echo "			echo -e \"ok\"; \\" >> Makefile
+	echo "		fi; \\" >> Makefile
+	echo "	else \\" >> Makefile
+	echo "		echo -e \"Creation failed : \"; \\" >> Makefile
+	echo "		cat .error ; \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "		false; \\" >> Makefile
+	echo "	fi;" >> Makefile
+	echo "" >> Makefile
+
+	echo "\$(BIN) : libthread \$(OBJECTS)" >> Makefile
+	echo "	@echo \"\"" >> Makefile
+	echo "	@echo -e \"Creating \$(BIN) binary : \\\\c\"" >> Makefile 
+	if test $debug = 1
+	then
+		if test $profiling = 1
+		then
+			echo "	@if \$(CC) -Wall -g -pg -O0 -o \$(BIN) \$(OBJECTS) \$(LIBS) 2> .error; then \\" >> Makefile
+		else
+			echo "	@if \$(CC) -Wall -g -O0 -o \$(BIN) \$(OBJECTS) \$(LIBS) 2> .error; then \\" >> Makefile
+		fi
+	else
+	echo "	@if \$(CC) -o \$(BIN) \$(OBJECTS) \$(LIBS) 2> .error; then \\" >> Makefile
+	fi
+	echo "		if test -s .error; then \\" >> Makefile
+	echo "			echo -e \"Created with warnings :\"; \\" >> Makefile
+	echo "			cat .error; \\" >> Makefile
+	echo "			\$(RM) -f .error; \\" >> Makefile
+	echo "		else \\" >> Makefile
+	echo "			echo -e \"ok\"; \\" >> Makefile
+	echo "		fi; \\" >> Makefile
+	echo "	else \\" >> Makefile
+	echo "		echo -e \"Creation failed : \"; \\" >> Makefile
+	echo "		cat .error ; \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "		false; \\" >> Makefile
+	echo "	fi;" >> Makefile
+	echo "" >> Makefile
+
+
+	echo "libthread : \$(THREADS_OBJECTS)" >> Makefile
+	echo "	@echo \"\"" >> Makefile
+	echo "	@echo -e \"Creating libsd_threads.a library : \\\\c\"" >> Makefile 
+	echo "	@if \$(AR) -r libsd_threads.a \$(THREADS_OBJECTS) 2> .error; then \\" >> Makefile
+	echo "		if test -s .error; then \\" >> Makefile
+	echo "			echo -e \"Created with warnings :\"; \\" >> Makefile
+	echo "			cat .error; \\" >> Makefile
+	echo "			\$(RM) -f .error; \\" >> Makefile
+	echo "		else \\" >> Makefile
+	echo "			echo -e \"ok\"; \\" >> Makefile
+	echo "		fi; \\" >> Makefile
+	echo "	else \\" >> Makefile
+	echo "		echo -e \"Creation failed : \"; \\" >> Makefile
+	echo "		cat .error ; \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "		false; \\" >> Makefile
+	echo "	fi;" >> Makefile
+	echo "	@echo -e \"Generating archive index : \\\\c\"" >> Makefile
+	echo "	@if \$(RANLIB) libsd_threads.a 2> .error; then \\" >> Makefile
+	echo "		if test -s .error; then \\" >> Makefile
+	echo "			echo -e \"Created with warnings :\"; \\" >> Makefile
+	echo "			cat .error; \\" >> Makefile
+	echo "			\$(RM) -f .error; \\" >> Makefile
+	echo "		else \\" >> Makefile
+	echo "			echo -e \"ok\"; \\" >> Makefile
+	echo "		fi; \\" >> Makefile
+	echo "	else \\" >> Makefile
+	echo "		echo -e \"Creation failed : \"; \\" >> Makefile
+	echo "		cat .error ; \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "		false; \\" >> Makefile
+	echo "	fi;" >> Makefile
+	echo "	@echo \"\"" >> Makefile	
+	echo "" >> Makefile
+
+
+	echo "%.o : %.cpp" >> Makefile
+	echo "	@echo -e \"Compiling \$< : \\\\c\"" >> Makefile
+	if test $OS_TEST = "MINGW"
+	then
+		if test $profiling = 1
+		then
+			echo "	@if \$(CC) \$(CCFLAGS) -Wall -g -pg -I. -I/usr/local/include `sdl-config --cflags` -o \$@ -c \$< 2>.error; then \\" >> Makefile
+		else
+			echo "	@if \$(CC) \$(CCFLAGS) -Wall -g -I. -I/usr/local/include `sdl-config --cflags` -o \$@ -c \$< 2>.error; then \\" >> Makefile
+		fi
+	else
+		if test $profiling = 1
+		then
+			echo "	@if \$(CC) \$(CCFLAGS) -Wall -g -pg -I. `sdl-config --cflags` -o \$@ -c \$< 2>.error; then \\" >> Makefile
+		else
+			echo "	@if \$(CC) \$(CCFLAGS) -Wall -g -I. `sdl-config --cflags` -o \$@ -c \$< 2>.error; then \\" >> Makefile
+		fi
+	fi
+	echo "		if test -s .error; then \\" >> Makefile
+	echo "			echo -e \"Created with warnings :\"; \\" >> Makefile
+	echo "			cat .error; \\" >> Makefile
+	echo "			\$(RM) -f .error; \\" >> Makefile
+	echo "		else \\" >> Makefile
+	echo "			echo -e \"ok\"; \\" >> Makefile
+	echo "		fi; \\" >> Makefile
+	echo "	else \\" >> Makefile
+	echo "		echo -e \"Creation failed : \"; \\" >> Makefile
+	echo "		cat .error ; \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "		false; \\" >> Makefile
+	echo "	fi;" >> Makefile
+	echo "" >> Makefile
+
+
+	echo "strip:" >> Makefile
+	echo "	@echo \"Stripping...\"" >> Makefile	
+	echo "	@if \$(STRIP) \$(BIN) 2> .error; then \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "	fi" >> Makefile
+	echo "" >> Makefile
+	
+	echo "done:" >> Makefile 
+	echo "	@echo \"\"" >> Makefile
+	echo "	@echo \"Compilation done. Enjoy !\"" >> Makefile 
+
+	echo ".PHONY : clean" >> Makefile
+	echo "" >> Makefile
+
+	echo "clean :" >> Makefile
+	echo "	@echo -e \"Cleaning up \$(BIN) : \\\\c\"; " >> Makefile
+	echo "	@if \$(RM) -f \$(BIN) libsd_threads.a \$(OBJECTS) \$(THREADS_OBJECTS) 2> .error; then \\" >> Makefile
+	echo "		echo -e \"ok\"; \\" >> Makefile
+	echo "		\$(RM) -f .error; \\" >> Makefile
+	echo "	fi; \\" >> Makefile
+	echo "	echo \"\"">> Makefile
+	echo "" >> Makefile
+
+}
+
+
+
+
+####
+# Displays help
+####
+help() {
+	echo "Available options for configure :"
+	echo "  --help : Displays this help"
+	echo "  --enable-optimize : Enable optimization"
+	echo "  --enable-debug : Enable debug output and binary"
+	echo "                   (disables --enable-optimize)"
+	echo "  --enable-profiling : Enable profiling support"
+	echo "                       (enables debug, too)"
+	exit;
+}
+
+
+
+
+####
+# Objects
+####
+THREADS_OBJS=`grep -l fork *.cpp | cut -f1 -d ':' | sed -e 's/.cpp/.o \\\/'`
+#THREADS_OBJS=`find . -maxdepth 1 -name '*.cpp' | sort | grep thread | sed -e 's/.cpp/.o \\\/'`
+EXC_OBJ=`find . -name '*.cpp' | sort | grep /Exception.cpp | sed -e 's/.cpp/.o \\\/'`
+THREAD_EXCP_OBJ=`find . -name '*.cpp' | sort | grep /ThreadException.cpp | sed -e 's/.cpp/.o \\\/'`
+OTHER_OBJS=`find . -name '*.cpp' | sort | sed '/\/ThreadException.cpp/d' | sed '/\/thread/d' | sed -e 's/.cpp/.o \\\/'`
+
+####
+# Main script
+####
+
+OS=`uname -n`
+SYSTEM=`uname -s`
+
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo " configuring NiL"
+echo ""
+echo "Check system: $OS - $SYSTEM"
+
+optimize=0
+debug=0
+profiling=0
+subcalled=0
+while test $# -gt 0;
+do
+	case $1 in
+		--help)
+			help;
+			;;
+		--enable-optimize)
+			optimize=1;
+			echo "--> Optimization enabled."
+			;;
+                --enable-debug)
+			echo "--> Debugging enabled."
+			debug=1;
+			optimize=0;
+			;;
+		--enable-profiling)
+			echo "--> Profiling enabled."
+			profiling=1;
+			debug=1;
+			optimize=0;
+			;;
+		--subcall)
+			subcalled=1;
+			;;
+	esac
+	shift
+done
+
+check_config;
+
+echo "Building Makefile..."
+build_Makefile;
+if test $subcalled = 0; then
+	echo ""
+	echo "Configure script successfully ended."
+	if test $SYSTEM = "FreeBSD"
+	then
+		echo "Now, type \"gmake\" for compiling the software."
+	else
+		echo "Now, type \"make\" for compiling the software."
+	fi
+fi
+echo ""
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+# End

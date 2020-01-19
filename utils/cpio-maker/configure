@@ -1,0 +1,52 @@
+#!/bin/sh
+
+#
+# Modified 2005-01-06 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Make CPIO-Maker work after file reorg.
+# Modified 2005-01-06 by Christoph Brill <egore@gmx.de>
+#	- add clean
+#	- add BIN
+#
+
+#TODO:
+# - port check functions over here (for commands g++ and rm)
+
+echo "# NiL isn't Liero" > Makefile
+echo "# Auto generated Makefile" >> Makefile
+echo "# Authors : Christoph Brill" >> Makefile
+echo "#           H. Ilari Liusvaara" >> Makefile
+
+OS_TEST=`uname -n`
+if test $OS_TEST = "WINDOWS"; then
+	echo "BIN = make-cpio.exe" >> Makefile
+elif test $OS_TEST = "windows"; then
+	echo "BIN = make-cpio.exe" >> Makefile
+else
+	echo "BIN = make-cpio" >> Makefile
+fi
+echo "" >> Makefile
+echo "all:  \$(BIN)" >> Makefile
+echo "" >> Makefile
+echo "make-cpio.o: make-cpio.cpp" >> Makefile
+echo "	g++ -c -o \$@ $< -I../../src -DWITHOUT_SDL" >> Makefile
+echo "" >> Makefile
+echo "%.o: ../../src/common/%.cpp" >> Makefile
+echo "	g++ -c -o \$@ $< -I../../src -DWITHOUT_SDL -DUSE_LIBBZIP2" >> Makefile
+echo "" >> Makefile
+echo "%.o: ../../src/common/vfs/%.cpp" >> Makefile
+echo "	g++ -c -o \$@ $< -I../../src -DWITHOUT_SDL -DUSE_LIBBZIP2" >> Makefile
+echo "" >> Makefile
+echo "%.o: ../../src/common/console/%.cpp" >> Makefile
+echo "	g++ -c -o \$@ $< -I../../src -DWITHOUT_SDL -DUSE_LIBBZIP2" >> Makefile
+echo "" >> Makefile
+echo "\$(BIN): make-cpio.o loader.o console.o logmsg.o exception.o mmapper.o loader_source_directory.o loader_source_cpio.o loader_gzip.o loader_bzip2.o loader_pathexpander.o" >> Makefile
+echo "	g++ -o \$@ $^  -lz -lbz2" >> Makefile
+echo "" >> Makefile
+echo "clean :" >> Makefile
+echo "	@echo -e \"Cleaning up \$(BIN) : \\\\c\"; " >> Makefile
+echo "	@if rm -f \$(BIN) make-cpio.o 2> .error; then \\" >> Makefile
+echo "		echo -e \"ok\"; \\" >> Makefile
+echo "		\$(RM) -f .error; \\" >> Makefile
+echo "	fi; \\" >> Makefile
+echo "	echo \"\"">> Makefile
+echo "" >> Makefile

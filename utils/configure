@@ -1,0 +1,25 @@
+#!/bin/sh
+# Configure script for NiL isn't Liero
+
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo " configuring utils"
+echo ""
+
+CURRENTPATH=`pwd`
+cd ${CURRENTPATH}/rgbf && ./configure --subcall
+cd ${CURRENTPATH}/cpio-maker && ./configure --subcall
+cd ${CURRENTPATH}
+
+echo "Building Makefile..."
+echo "rgbf:" > Makefile
+echo "	@cd rgbf && make all" >> Makefile
+echo "cpio:" > Makefile
+echo "	@cd cpio-maker && make all" >> Makefile
+echo "all:" >> Makefile
+echo "	rgbf cpio" >> Makefile
+echo "clean:" >> Makefile
+echo "	@cd rgbf && make clean" >> Makefile
+
+echo ""
+echo " done configuring utils"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"

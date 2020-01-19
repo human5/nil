@@ -1,0 +1,142 @@
+
+ *****************
+ * Shopping list *
+ *****************
+
+To get NiL to run you will need:
+* SDL               http://www.libsdl.org/
+* SDL_mixer         http://www.libsdl.org/projects/SDL_mixer/
+* SDL_ttf           http://www.libsdl.org/projects/SDL_ttf/
+* SDL_image         http://www.libsdl.org/projects/SDL_image/
+* zlib              http://www.zlib.net/
+* libpng            http://www.libpng.org/pub/png/
+* freetype          http://www.freetype.org
+* scons     >=0.96  http://www.scons.org
+* NiL               You have it :) or http://NiL.sourceforge.net
+
+
+ **************************
+ * Installing from binary *
+ **************************
+
+No, you don't want to be installing NiL just yet, but here is a
+short guide to get it running from the binary package:
+
+* Install the libraries listed above and if you are lucky your
+  distribution provides something to do that for you.
+* Unpack the nil-binary-*.tar.bz2 tarball.
+* Run: ./nil
+* Read the section "Running NiL"
+
+ ************************************
+ * Installing from source for linux *
+ ************************************
+
+* Install the libraries listed above and if you are lucky your
+  distribution provides something to do that for you.
+  Note: You also need the headers, not only the libraries!
+* Unpack the nil-*.tar.bz2 tarball
+* Go to the NiL source directory change to nil and do the normal
+  ./configure && make OR type "scons". Both methods should leave
+  an executeable in the next nil directory (mine is: ~/nil/src).
+* Run: ./nil
+* Read the section "Running NiL"
+
+ ************************************
+ * Installing from source for win32 *
+ ************************************
+
+For instructions on how to compile Nil from source on Win32, please see the HOWTO.win32 file
+
+ ********************************
+ * Creating your own .lump file *
+ ********************************
+
+* If you did not already built the cpio-maker, go into the
+  utils/cpio-maker and type "scons"
+* Go back into NiL's base directory and type
+  ./utils/cpio-maker/cpio-maker default.lump data
+  This will generate a default.lump
+* Copy the file into the same directory where your binary
+  lies in, so NiL can find it.
+
+ ***************
+ * Running NiL *
+ ***************
+
+To just run nil just use "./nil" this will start a client
+and also fork off a server.
+
+You can also run a dedicated server with ./nil mode=server and
+then connect to it from a machine somewhere using
+./nil mode=client server=nilserver.domain.org
+
+If you move the data file (default.lump) around then you can
+tell nil where to find it with data=/usr/share/nil/default.lump
+
+You can put all these options in a file (~/.nilrc) and nil will
+use that as default.
+
+Every time NiL is run it saves all the configuration options to
+~/.nilrc.last_good this file is commented and holds all the
+options that nil understands, once you have run nil once go and
+read this file to see what options NiL supports.
+
+
+ ********
+ * Keys *
+ ********
+
+Once everything is running the keys are:
+
+                Player 1            Player 2
+                ========            ========
+aim up          Arrow Up            Keypad 5
+aim down        Arrow Down          Keypad 2
+walk left       Arrow Left          Keypad 1
+walk right      Arrow Right         Keypad 3
+fire weapon     Ctrl                Keypad 4
+dig             Alt                 Keypad 8
+jump            Shift               Keypad 7
+fire hook       z                   Keypad *
+release hook    x                   Keypad /
+shorten bungee  a                   Keypad -
+lengthen bungee s                   Keypad +
+previous weapon ,                   Keypad 9
+next weapon     .                   Keypad 6
+use Shotgun     1                   Keypad Del
+use Minigun     2                   Keypad Home
+use Rocket      3                   Keypad PageUp
+use Mininuke    4                   Keypad PageDown
+use Jetpack     5                   Keypad End
+
+The function keys do things like:
+F1:        Toggle console (on/off)
+F2:        Save screen shot
+F3:        Logo (on/off)
+F4:        Deathcam (on/off)
+F5:        Traffic graph (100%=128kb/s) (on/off)
+F6:        Framerate (on/off)
+F7:        Drop shadow (on/off)
+F8:        Bilinear smoothing (on/off)
+ESC:       Bring up the menu
+RETURN:    Enter chat mode
+BACKSPACE: Delete a character from chat message
+TAB:       Display the frag table while pressed
+
+ ***********************************
+ * Running NiL with teams and bots *
+ ***********************************
+
+Start the game with e.g.:
+
+"./nil mode=clientserver game_mode=teamplay team=0"
+
+To add a some enemies do:
+
+"./nil mode=bot player_name=theDude team=2 &"
+"./nil mode=bot player_name=MrSmith team=2 &"
+
+And I'm pretty sure you wont stand a chance, unless you invite a few friends :)
+
+

@@ -1,0 +1,100 @@
+#!/bin/sh
+# Configure script for NiL isn't Liero (utils/rgbf)
+
+#
+#
+# This file is part of NiL.
+# Copyright (C) 2004 Christoph Brill <egore@users.sourceforge.net>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#       
+                
+#TODO:
+# - add enable-optimize check
+# - add enable-debug check
+# - add enable-profiling check
+
+build_Makefile() {
+	echo "PROGRAM1 = png2rgbf" > Makefile
+	echo "PROGRAM2 = rgbf2png" >> Makefile
+	echo "" >> Makefile
+	echo "OBJECTS1 = png2rgbf.o read-png.o write-rgbf.o" >> Makefile
+	echo "OBJECTS2 = rgbf2png.o read-rgbf.o write-png.o" >> Makefile
+	echo "" >> Makefile
+	echo "LIBS1 = -lpng -lz" >> Makefile
+	echo "LIBS2 = -lz" >> Makefile
+	echo "" >> Makefile
+	echo "all: \$(PROGRAM1) \$(PROGRAM2)" >> Makefile
+	echo "" >> Makefile
+	echo "\$(PROGRAM1): \$(OBJECTS1)" >> Makefile
+	echo "	g++ -o \$(PROGRAM1) \$(OBJECTS1) \$(LIBS1)" >> Makefile
+	echo "" >> Makefile
+	echo "\$(PROGRAM2): \$(OBJECTS2)" >> Makefile
+	echo "	g++ -o \$(PROGRAM2) \$(OBJECTS2) \$(LIBS2)" >> Makefile
+	echo "" >> Makefile
+	echo "%.o : %.cpp" >> Makefile
+	echo "	g++ -o \$@ -c $<" >> Makefile
+	echo "" >> Makefile
+	echo "clean:" >> Makefile
+	echo "	@rm -f \$(PROGRAM1) \$(PROGRAM2) \$(OBJECTS1) \$(OBJECTS2)" >> Makefile
+}
+
+####
+# Main script
+####
+
+echo "---------------------------------------------------------"
+echo " configuring rgbf<->png converter"
+echo ""
+
+OS=`uname -n`
+SYSTEM=`uname -s`
+
+echo "Check system: $OS - $SYSTEM"
+
+optimize=0
+debug=0
+profiling=0
+subcalled=0
+while test $# -gt 0;
+do
+	case $1 in
+		--help)
+			help;
+			;;
+		--enable-optimize)
+			optimize=1;
+			echo "Optimization enabled."
+			;;
+		--enable-debug)
+			echo "Debugging enabled."
+			debug=1;
+			optimize=0;
+			;;
+		--enable-profiling)
+			echo "Profiling enabled."
+			profiling=1;
+			debug=1;
+			optimize=0;
+			;;
+		--subcall)
+			subcalled=1;
+			;;
+	esac
+	shift
+done
+
+echo "Building Makefile..."
+build_Makefile;

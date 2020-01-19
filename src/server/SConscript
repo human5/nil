@@ -1,0 +1,12 @@
+#
+# Changed 2005-03-17 by H. Ilari Liusvaara <hliusvaa@cc.hut.fi>
+#	- Make it return what library returns, so it will build properly
+#	- Use object instead of library, so link works.
+#
+
+Import('*')
+
+source = Glob("*.cpp")
+result = env.Object(source = source)
+Return('result')
+

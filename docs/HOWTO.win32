@@ -1,0 +1,108 @@
+ ************************************
+ * Installing from source for win32 *
+ ************************************
+
+You could use DevC++, or dare I say it, Microsoft Visual Studio, but I find the easiest way to
+compile Nil (or any other linux app) under Win32 is to use the MinGW and MSYS environment
+
+The hardest part is obtaining all the libraries. This document is rather brief, and I'll leave the
+challenge of getting each library working correctly as an excerise. :)
+
+I found it helpful, in the MSYS environment, when running configure scripts I found it easy to use the
+--prefix=/usr parameter.
+
+WARNING: You can't link a file using MinGW with a dll compiled under Microsoft Visual Studio. It
+just doesn't work!
+
+Here is what you need.
+
+1. MinGW
+
+    Install MinGW. (download from http://www.mingw.org)
+    This is your gcc compiler, without this, it makes it hard to compile stuff. :)
+    The version I am using is MinGW-3.1.0-1.exe
+    
+2. MSYS
+
+    Install MSYS. (download from http://www.mingw.org)
+    This is a unix shell-like environment.
+    The version I am using is MSYS-1.0.10.exe
+
+3. msysDTK
+
+    Install msysDTK. (download from http://www.mingw.org)
+    This is your basic development kit for MSYS, it includes a cut down version of perl, and autoconfig
+    tools so that you can compile standard GNU packages.
+    The version I am using is msysDTK-1.0.1.exe
+    
+4. SDL
+
+    Compile and Install SDL (download from http://www.libsdl.org)
+    I have also found it handy to download the mingw binary, as you will need the SDL.dll file for later.   
+    The version I am using is SDL-1.2.7
+
+5. SDL_mixer
+
+    Compile and Install SDL_mixer (download from http://www.libsdl.org/projects/SDL_mixer)
+    The version I am using is SDL_mixer-1.2.5
+
+6. Compression (zlib)
+
+    Compile and install zlib (download from http://gnuwin32.sourceforge.net/packages/zlib.htm)
+    The version I am using is zlib-1.2.1
+    
+7. PNG
+
+    Compile and Install libpng (download from http://www.libpng.org/pub/png/libpng.html)
+    The version I am using is 1.2.6
+         
+8. SDL_image
+
+    Compile and Install SDL_image (download from http://www.libsdl.org/projects/SDL_image)
+    The version I am using is SDL_image-1.2.3
+     
+9. SDL_net
+
+    Compile and Install SDL_Net (download from http://www.libsdl.org/projects/SDL_net)
+    The version I am using is SDL_net-1.2.5
+     
+10. bzip2 lib
+
+    Compile and install bzip2 (download from  http://gnuwin32.sourceforge.net/packages/bzip2.htm)
+    The version I am using is bzip2-1.0.2
+    
+11. freetype2
+
+    Compile and install freetype2 (download from  http://gnuwin32.sourceforge.net/packages/freetype.htm)
+    The version I am using is freetpye2-2.1.9
+    
+12. SDL_ttf
+
+    Compile and Install SDL_ttf (download from http://www.libsdl.org/projects/SDL_ttf)
+    The version I am using is SDL_ttf-2.0.6
+     
+13. pthreads
+
+    Download and Install pthreads (http://sources.redhat.com/pthreads-win32/)
+    The version I am using is pthreads-2004-06-22.exe
+     
+Finally, (still with us??), download and install NIL
+
+14. NiL
+
+    Compile the source from http://nil.sourceforge.net/
+
+
+If you want to make a spiffy nil-setup.exe install file, then run the Innosetup script located in
+../src/win32/nil.iss (download Innosetup from http://www.jrsoftware.org/isinfo.php)
+    
+Notes:
+------
+    SP2 users: If you have your local firewall enabled, you need to allow the NIL.EXE program access for
+               inbound connections. If you don't then Nil will fail. This only applies when you run the server.
+
+For any further information about compiling or running under Win32, please don't hesitate to ask me.
+
+Cheers,
+- Lucky Phil.
+<pghowlett@users.sourceforge.net>
