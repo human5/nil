@@ -55,7 +55,7 @@ public:
 	    \param flags ???
 	    \param volume The volume of the sound
 	    \return Returns a handle to the sound */
-	int start_sound(char *sample_name, int flags, float volume);
+	int start_sound(const char *sample_name, int flags, float volume);
 	/*! Start a sound that is bound to a position
 	    \param sample_name The unique name of the sample
 	    \param flags ???
@@ -63,14 +63,14 @@ public:
 	    \param x_pos The x-coordinate of the sound
 	    \param y_pos The y-coordinate of the sound
 	    \return Returns a handle to the sound */
-	int start_sound(char *sample_name, int flags, float volume, float x_pos, float y_pos);
+	int start_sound(const char *sample_name, int flags, float volume, float x_pos, float y_pos);
 	/*! Start a sound that is bound to an object
 	    \param sample_name The unique name of the sample
 	    \param flags ???
 	    \param volume The volume of the sound
 	    \param objectid The idea of the object
 	    \return Returns a handle to the sound */
-	int start_sound(char *sample_name, int flags, float volume, int objectid);
+	int start_sound(const char *sample_name, int flags, float volume, int objectid);
 	/*! Stop a sound
 	    \param sound_handle The handle to the sound (obtained by start_sound)
 	    \return Returns true if the sound has been stopped and false if the sound has not been found */

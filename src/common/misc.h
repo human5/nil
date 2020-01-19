@@ -227,7 +227,7 @@ Object_type ot_from_name (const char *name);
 #define TEAM_NUM 4
 extern Sint32 teamColorsMin[TEAM_NUM];
 extern Sint32 teamColorsMax[TEAM_NUM];
-extern char *teamNames[TEAM_NUM];
+extern const char *teamNames[TEAM_NUM];
 
 /*! gives a random integer in the range min..max
     @param min The minimum of the range

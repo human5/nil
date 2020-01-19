@@ -48,7 +48,7 @@ Menu_item::Menu_item(int type_, Font_instance *font_) {
 	calculate_geom(label, font);
 }
 
-Menu_item::Menu_item(int type_, char* label_, Font_instance *font_) {
+Menu_item::Menu_item(int type_, const char* label_, Font_instance *font_) {
 	active = false;
 	type = type_;
 	font = font_;

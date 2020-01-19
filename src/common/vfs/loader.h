@@ -133,17 +133,17 @@ public:
 	bool fileread(char *name, void *buffer, unsigned int buffer_size, unsigned int offset = 0);
 	/*! mmap()'ed direct access; returns a pointer to the file or NULL
 	    @param name The name of the file */
-	const void *getfile(char *name);
+	const void *getfile(const char *name);
 #ifndef WITHOUT_SDL
 	/*! Get the SDL_RWops for file.
 	    @param name The name of the file
 	    @return The SDL_RWops for this file */
-	SDL_RWops *getrwops(char *name);
+	SDL_RWops *getrwops(const char *name);
 #endif
 	/*! Gets the size of the file
 	   @param name Thename of the file
 	   @return Returns -1 on error and the size on success. */
-	int filesize(char *name);
+	int filesize(const char *name);
 	/*! Saving all the loaded data to a .lump.
 	    @param buffer The buffer
 	    @param buffer_size The size of the buffer

@@ -138,11 +138,11 @@ public:
 	//! ???
 	void assert_object_type(int objectid, Object_type expected_type);
 	//! start a sound via the soundsystem->start_sound function
-	int startSound(char *sample_name, int flags, float volume) { return soundsystem->start_sound(sample_name,flags,volume);}
+	int startSound(const char *sample_name, int flags, float volume) { return soundsystem->start_sound(sample_name,flags,volume);}
 	//! start a sound via the soundsystem->start_sound function
-	int startSound(char *sample_name, int flags, float volume, float x_pos, float y_pos) const { return soundsystem->start_sound(sample_name, flags, volume, x_pos, y_pos); }
+	int startSound(const char *sample_name, int flags, float volume, float x_pos, float y_pos) const { return soundsystem->start_sound(sample_name, flags, volume, x_pos, y_pos); }
 	//! start a sound via the soundsystem->start_sound function
-	int startSound(char *sample_name, int flags, float volume, int objectid) const { return soundsystem->start_sound(sample_name, flags, volume, objectid); }
+	int startSound(const char *sample_name, int flags, float volume, int objectid) const { return soundsystem->start_sound(sample_name, flags, volume, objectid); }
 	/*! check if position x,y is passable, safe variant, does boundary checks
 	    @param x X coordinate of the position
 	    @param y Y coordinate of the position

@@ -163,17 +163,17 @@ int Soundsystem::start_sound(Sound_event *sound_event) {
 	return sound_handle;
 }
 
-int Soundsystem::start_sound(char *sample_name, int flags, float volume) {
+int Soundsystem::start_sound(const char *sample_name, int flags, float volume) {
 	logmsg(lt_debug, "Playing sound %s (global)", sample_name);
 	return start_sound(new Sound_event(sample_name, flags|SOUND_GLOBAL, volume,0,0,0,this));
 }
 
-int Soundsystem::start_sound(char *sample_name, int flags, float volume, float x_pos, float y_pos) {
+int Soundsystem::start_sound(const char *sample_name, int flags, float volume, float x_pos, float y_pos) {
 	logmsg(lt_debug, "Playing sound %s (position)", sample_name);
 	return start_sound(new Sound_event(sample_name,flags|SOUND_STATIC,volume,x_pos,y_pos,0,this));
 }
 
-int Soundsystem::start_sound(char *sample_name, int flags, float volume, int objectid) {
+int Soundsystem::start_sound(const char *sample_name, int flags, float volume, int objectid) {
 	logmsg(lt_debug, "Playing sound %s (object)", sample_name);
 	return start_sound(new Sound_event(sample_name,flags|SOUND_OBJECT,volume,0,0,objectid,this));
 }

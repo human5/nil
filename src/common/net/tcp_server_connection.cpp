@@ -98,13 +98,14 @@ int Tcp_server_connection::accept(Tcp_server *tcp_server_, int server_socket) {
 	done = false;
 
 	tcp_server = tcp_server_;
-#ifndef _WIN32
-	unsigned int client_addr_size;
-#else
-	// under windows this seems necessary
-	int client_addr_size;
-#endif
-	client_addr_size = sizeof(client_addr);
+    // XXX Undefined Variable
+    //#ifndef _WIN32
+	//unsigned int client_addr_size;
+    //#else
+	//// under windows this seems necessary
+	//int client_addr_size;
+    //#endif
+	//client_addr_size = sizeof(client_addr);
 	socket = ::accept(server_socket, NULL, 0);
 	if(socket >= 0)
 		cdebug << "accept(" << server_socket << ", NULL, 0) = "

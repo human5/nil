@@ -48,7 +48,7 @@ void Graphics::init(Loader *loader_) {
 	loader = loader_;
 }
 
-Graphic *Graphics::getgraphic(char *name) {
+Graphic *Graphics::getgraphic(const char *name) {
 	Loaded_graphics::iterator i=graphics->find(name);
 	if (i != graphics->end())
 		return i->second;
@@ -65,7 +65,7 @@ Graphic *Graphics::getgraphic(char *name) {
 	return graphic;
 }
 
-Graphic *Graphics::new_graphic(char *name) {
+Graphic *Graphics::new_graphic(const char *name) {
 	Loaded_graphics::iterator i=graphics->find(name);
 	if (i == graphics->end()) {
 
@@ -77,7 +77,7 @@ Graphic *Graphics::new_graphic(char *name) {
 		return NULL;
 }
 
-void Graphics::delete_graphic(char *name) {
+void Graphics::delete_graphic(const char *name) {
 	Loaded_graphics::iterator i=graphics->find(name);
 	if (i != graphics->end()) {
 		graphics->erase(i);

@@ -86,7 +86,7 @@ Sint32 teamColorsMax[TEAM_NUM] = {
 	0x555555 };
 
 //! names for the teams
-char *teamNames[TEAM_NUM] = {
+const char *teamNames[TEAM_NUM] = {
 	"Blue Bashers",
 	"Red Ravers",
 	"Green Guys",

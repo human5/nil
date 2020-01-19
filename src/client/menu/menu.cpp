@@ -153,14 +153,14 @@ SDL_Cursor *Menu::init_cursor(const char *image[]) {
 	return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
 }
 
-bool Menu::add_item(int type, char* label) {
+bool Menu::add_item(int type, const char* label) {
 	// create a new item and add to the end of the entrylist
 	Menu_item *newitem = new Menu_item(type, label, font);
 	items->push_back(newitem);
 	return true;
 }
 
-bool Menu::add_active_item(int type, char* label) {
+bool Menu::add_active_item(int type, const char* label) {
 	// create a new item, activate it and add to the end of the entrylist
 	Menu_item *newitem = new Menu_item(type, label, font);
 	if (type != it_sepstart && type != it_sepend)
@@ -476,26 +476,26 @@ bool Menu::handle_joystick_motion(Event_joystick_motion *joystick_motion_event) 
 	Uint8 axis = joystick_motion_event->joystick_motion->axis;
 	Sint16 value = joystick_motion_event->joystick_motion->value;
 	value /= 10;
-	Nil_inputevent* nil_inputevent;
-	nil_inputevent->sdl_inputevent = joystick_motion_event->sdl_inputevent;
+	Nil_inputevent nil_inputevent;
+	nil_inputevent.sdl_inputevent = joystick_motion_event->sdl_inputevent;
 	if (axis == 0 || axis == 2 || axis == 4) {
 		if (value > 0)
-			nil_inputevent->cmdfunction = CMDFUNCTION::UP;
+			nil_inputevent.cmdfunction = CMDFUNCTION::UP;
 		else if (value < 0)
-			nil_inputevent->cmdfunction = CMDFUNCTION::DOWN;
+			nil_inputevent.cmdfunction = CMDFUNCTION::DOWN;
 	} else if (axis == 1 || axis == 3 || axis == 5) {
 		if (value > 0) {
-			nil_inputevent->cmdfunction = CMDFUNCTION::RIGHT;
+			nil_inputevent.cmdfunction = CMDFUNCTION::RIGHT;
 		}
 		else if (value < 0) {
-			nil_inputevent->cmdfunction = CMDFUNCTION::LEFT;
+			nil_inputevent.cmdfunction = CMDFUNCTION::LEFT;
 		}
 	} else {
 		logmsg(lt_error, "Wheter X nor Y axis(%i) has been moved", axis);
 		return false;
 	}
-	//FIXME:return handle_input(nil_inputevent);
-	return false;
+    // XXX This was disabled in original source code, no clue why
+	return handle_input(&nil_inputevent);
 }
 
 void Menu::draw_menu(Mutable_raw_surface *target) {

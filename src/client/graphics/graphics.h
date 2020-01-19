@@ -43,14 +43,14 @@ public:
 	    use of this function down to a minimum.
 	    @param name The name of the graphic
 	    @return ??? */
-	Graphic *getgraphic(char *name);
+	Graphic *getgraphic(const char *name);
 	/*! This creates a new graphics object with a certain name, but it doesn't load anything
 	    @param name The name of the graphic
 	    @return ??? */
-	Graphic *new_graphic(char *name);
+	Graphic *new_graphic(const char *name);
 	/*! delete a graphic
 	    @param name The name of the graphic */
-	void delete_graphic(char *name);
+	void delete_graphic(const char *name);
 protected:
 	//! Storage for the reference to the loader
 	Loader *loader;

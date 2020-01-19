@@ -52,7 +52,7 @@
 #include <string>
 #include <set>
 
-Config_value::Config_value(char *description_) {
+Config_value::Config_value(const char *description_) {
 	description = strdup(description_);
 	value = "";
 	append_value = false;
@@ -77,7 +77,7 @@ void Config_value::clear_value() {
 	value = "";
 }
 
-void Config_value::set_value(char *newvalue) {
+void Config_value::set_value(const char *newvalue) {
 	if (append_value) {
 		if (value.size() > 0)
 			value += "\t";
@@ -496,7 +496,7 @@ Configuration::~Configuration() {
 	delete values;
 }
 
-void Configuration::add_option(char *name, char *description, char *default_value, int min, int max, bool integer_value, bool append_value) {
+void Configuration::add_option(const char *name, const char *description, const char *default_value, int min, int max, bool integer_value, bool append_value) {
 	Config_value *newvalue = new Config_value(description);
 	newvalue->min = min;
 	newvalue->max = max;
@@ -514,7 +514,7 @@ bool Configuration::parse_cmdline(int argc,char **argv) {
 	return true;
 }
 
-bool Configuration::load_file(char *filename) {
+bool Configuration::load_file(const char *filename) {
 	char expanded_filename[200];
 	try {
 		VFS::expand_path(expanded_filename, sizeof(expanded_filename),
@@ -574,7 +574,7 @@ bool Configuration::parse_file(char *file_contents) {
 	return true;
 }
 
-bool Configuration::parse_option(char *line) {
+bool Configuration::parse_option(const char *line) {
 	char *tmp = strdup(line);
 	char *tmp_saved = tmp;
 
@@ -605,7 +605,7 @@ bool Configuration::parse_option(char *line) {
 }
 
 //-----------------------------------------------------------------------------
-bool Configuration::clear_option(char *name)
+bool Configuration::clear_option(const char *name)
 {
 	//find the option and set it to ""
 	Config_values::iterator i=values->find(name);
@@ -622,7 +622,7 @@ bool Configuration::clear_option(char *name)
 }
 
 //-----------------------------------------------------------------------------
-bool Configuration::set_option(char *name, char *value)
+bool Configuration::set_option(const char *name, const char *value)
 {
 	if (!value || !*value) return clear_option(name);
 

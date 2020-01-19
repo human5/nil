@@ -63,9 +63,10 @@ bool colored_blood;
 
 void perform_benchmark(SDL_Surface *screen , Config_xy *screen_size, Loader *loader) {
 	Font_instance *smallfont;
-	Font_instance *bigfont;
+    // XXX Unused Variable
+	//Font_instance *bigfont;
 	smallfont = loader->fonts.getfont("arial", 10);
-	bigfont = loader->fonts.getfont("arial", 24);
+	//bigfont = loader->fonts.getfont("arial", 24);
 	logmsg(lt_debug, "bench: ---- start...");
 	Mutable_raw_surface tmp; 
 

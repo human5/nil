@@ -118,12 +118,12 @@ private:
 	//! get the width of the currently drawn menu
 	int get_active_menu_count();
 	//! add an entry to the end of the menu
-	bool add_item(int type, char* label);
+	bool add_item(int type, const char* label);
 	/*! add an entry to the end of the menu and activate it
 	    \param type The type of the item
 	    \param label The label of the item
 	    \return Returns true if the item was added */
-	bool add_active_item(int type, char* label);
+	bool add_active_item(int type, const char* label);
 	/*! get the type of the currently selected menu item
 	    \return Returns the type */
 	int get_active_item_type();

@@ -56,7 +56,7 @@ class Config_value {
 public:
 	/*! Constructor that creates a new config value with the given description
 	    @param description_ The description */
-	Config_value(char *description_);
+	Config_value(const char *description_);
 	//! Destructor that free's the despcription
 	~Config_value();
 	//! ???
@@ -64,7 +64,7 @@ public:
 	//! ???
 	const char* get_value();
 	//! ???
-	void set_value(char *newvalue);
+	void set_value(const char *newvalue);
 	//! ???
 	void clear_value();
 	/*! if true, then setting this value means appending it to the old value, separated by
@@ -96,13 +96,13 @@ public:
 	//! function to fill up the object from file
 	bool parse_file(char *file_contents);
 	//! function to load a file
-	bool load_file(char *filename);
+	bool load_file(const char *filename);
 	//! parser to check if options are given in correct format and if an option exists
-	bool parse_option(char *line);
+	bool parse_option(const char *line);
 	//! resets an option
-	bool clear_option(char *name);
+	bool clear_option(const char *name);
 	//! sets an option
-	bool set_option(char *name, char *value);
+	bool set_option(const char *name, const char *value);
 	//! gets an option
 	const char *get_option(const char *name);
 	//! gets an option and returns as integer
@@ -131,7 +131,7 @@ protected:
 	//! a value
 	Config_values *values;
 	//! adds an option
-	void add_option(char *name, char *description, char *default_value, int min=0, int max=0, bool integer_value=false, bool append_value=false);
+	void add_option(const char *name, const char *description, const char *default_value, int min=0, int max=0, bool integer_value=false, bool append_value=false);
 	//! place to store an error string
 	char error[200];
 };

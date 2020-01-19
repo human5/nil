@@ -358,7 +358,7 @@ int Loader::addsources(const char* paths)
 	return 1;
 }
 
-bool Loader::fileread(char* name, void* buffer, unsigned int bufsize, unsigned int offset)
+bool Loader::fileread(const char* name, void* buffer, unsigned int bufsize, unsigned int offset)
 {
 	pointer::Weak<VFS::File_instance> instance = 
 		lookup_instance(dictionary,name);
@@ -387,7 +387,7 @@ bool Loader::fileread(char* name, void* buffer, unsigned int bufsize, unsigned i
 	return true;
 }
 
-const void* Loader::getfile(char* name)
+const void* Loader::getfile(const char* name)
 {
 	pointer::Weak<VFS::File_instance> instance = 
 		lookup_instance(dictionary,name);
@@ -402,7 +402,7 @@ const void* Loader::getfile(char* name)
 	return instance->mapped_at->get_base();
 }
 
-int Loader::filesize(char* name)
+int Loader::filesize(const char* name)
 {
 	pointer::Weak<VFS::File_instance> instance = 
 		lookup_instance(dictionary,name);
@@ -423,7 +423,7 @@ static int nowrite(SDL_RWops* a, const void* b, int c, int d)
 	return -1;
 }
 
-SDL_RWops* Loader::getrwops(char* name)
+SDL_RWops* Loader::getrwops(const char* name)
 {
 	pointer::Weak<VFS::File_instance> instance = 
 		lookup_instance(dictionary,name);

@@ -52,7 +52,8 @@ struct AlphaTable {
 	    @param count Count */
 	void prescale_buffer(int32 *src, int count) const {
 		while(count--) {
-			*src++=prescale(*src);
+			*src=prescale(*src);
+            src++;
 		}
 	}
 	/*! Blending of prescaled
@@ -310,10 +311,11 @@ void draw_stretch(const Raw_surface *source, Mutable_raw_surface *target, int so
 		s1=src+(y_coord>>8)*source->get_xsize();
 		s2=s1+source->get_xsize();
 		for (x=0,x_coord=x_base;x<target_xsize;x++) {
-			*t++=bf.blend(blend(s1[x_coord>>8],s1[(x_coord>>8)+1],
+			*t=bf.blend(blend(s1[x_coord>>8],s1[(x_coord>>8)+1],
 									  s2[x_coord>>8],s2[(x_coord>>8)+1],
 									  x_coord&0xff,y_coord&0xff),
 							  *t);
+            t++;
 			x_coord+=x_ratio;
 		}
 		y_coord+=y_ratio;
@@ -462,14 +464,14 @@ void draw_stretch(const Raw_surface *source, Mutable_raw_surface *target, int so
 				int32 *tp = target_pixel;
 				for(int x=0;x<source_xsize;x++) {
 					switch (enlargement) {
-					case 7: *tp++=bf.blend(*sp,*tp);
-					case 6: *tp++=bf.blend(*sp,*tp);
-					case 5: *tp++=bf.blend(*sp,*tp);
-					case 4: *tp++=bf.blend(*sp,*tp);
-					case 3: *tp++=bf.blend(*sp,*tp);
-					case 2: *tp++=bf.blend(*sp,*tp);
+					case 7: *tp=bf.blend(*sp,*tp);tp++;
+					case 6: *tp=bf.blend(*sp,*tp);tp++;
+					case 5: *tp=bf.blend(*sp,*tp);tp++;
+					case 4: *tp=bf.blend(*sp,*tp);tp++;
+					case 3: *tp=bf.blend(*sp,*tp);tp++;
+					case 2: *tp=bf.blend(*sp,*tp);tp++;
 					default:
-					case 1: *tp++=bf.blend(*sp,*tp);
+					case 1: *tp=bf.blend(*sp,*tp);tp++;
 					}
 					sp++;
 				}
@@ -567,7 +569,8 @@ void draw_line(Mutable_raw_surface *target, int x0, int y0, int x1, int y1, int3
 		int x = x0;                          // x is just the x coordinate
 		int y = y0*xsize;                    // y is offset into buffer, not the y coordinate (this saves many muls) 
 		dx = SIGN(dx);                       // we just need the sign of dx
-		int old_y = y;
+        // XXX Unused Variable
+		//int old_y = y;
 
 		x1 += dx;
 		while (x != x1) {
@@ -578,7 +581,8 @@ void draw_line(Mutable_raw_surface *target, int x0, int y0, int x1, int y1, int3
 			//tally the error and ajust
 			e += dy;
 			if (e >= (1 << ERRORBITS)) {
-				old_y = y;
+                // XXX Unused Variable
+				//old_y = y;
 				y += ymove;
 				e -= (1 << ERRORBITS);
 			}
@@ -596,7 +600,8 @@ void draw_line(Mutable_raw_surface *target, int x0, int y0, int x1, int y1, int3
 		int sign_dy = SIGN(dy);
 		dy = xsize*sign_dy;                  //we just need the sign of dy scaled to one pixel up or down
 		y1 = (y1+sign_dy)*xsize;
-		int old_x = x;
+        // XXX Unused Variable
+		//int old_x = x;
 
 		while (y != y1) {
 			//set the color
@@ -604,7 +609,8 @@ void draw_line(Mutable_raw_surface *target, int x0, int y0, int x1, int y1, int3
 			//tally the error and ajust
 			e += dx;
 			if (e >= (1 << ERRORBITS)) {
-				old_x = x;
+                // XXX Unused Variable
+				//old_x = x;
 				x += xmove;
 				e -= (1 << ERRORBITS);
 			}

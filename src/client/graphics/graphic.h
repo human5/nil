@@ -49,7 +49,7 @@ public:
 	    @param loader A reference to the loader
 	    @param name The name of the graphic to load
 	    @return Returns true, if sucessfully loaded */
-	bool load(Loader *loader, char *name);
+	bool load(Loader *loader, const char *name);
 #ifndef WITHOUT_SDL
 	/*! for font handling
 	    @param source An SDL surface*/

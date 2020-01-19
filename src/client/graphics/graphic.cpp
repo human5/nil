@@ -60,7 +60,7 @@ void Graphic::create(Graphic *graphic) {
 	dynamic_cast<Mutable_raw_surface *>(surface)->create(graphic->get_surface());
 }
 
-bool Graphic::load(Loader *loader, char *name) {
+bool Graphic::load(Loader *loader, const char *name) {
 	char *file = (char*)loader->getfile(name);
 	if (!file) return false;
 	if (surface && !is_mutable()) {

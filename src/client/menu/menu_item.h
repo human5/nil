@@ -71,7 +71,7 @@ public:
 	    @param font A handle to the font that will be used for this menu */
 	Menu_item(int type_, Font_instance *font_);
 	//! Constructor that adds a deactivated menu-item with given type
-	Menu_item(int type_, char* label_, Font_instance *font_);
+	Menu_item(int type_, const char* label_, Font_instance *font_);
 	//! Destructor (empty)
 	~Menu_item();
 	//! determines if an item wants to handle itself or should be handled here
