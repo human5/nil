@@ -64,8 +64,7 @@ Fonts::~Fonts() {
 	i = font_instances->begin();
 	e = font_instances->end();
 	while (i != e) {
-		//FIXME: This causes some memleak!
-		delete i->first;
+		delete[] i->first;
 		delete i->second;
 		t = i;
 		++i;
