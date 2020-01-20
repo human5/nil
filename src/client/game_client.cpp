@@ -1018,6 +1018,7 @@ bool Game_client::handle_mouse_motion(Event_mouse_motion *mouse_motion_event) {
 		players[0].elevate_up   = true;
 		controls_ticked = false;
 	}
+    delete mouse_motion_event;
 	return true;
 }
 

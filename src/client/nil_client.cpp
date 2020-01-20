@@ -276,7 +276,7 @@ void run_client(Configuration &config) {
 		while (SDL_PollEvent(&event)) {
 			Nil_inputevent inputevent;
 			inputevent.sdl_inputevent = &event;
-			if (evtmapper.lookup(inputevent)) {
+			if (evtmapper.lookup(inputevent) || game_client->chat_visible) {
 				if (!game_client->event_handler->handle(&inputevent))
 					logmsg(lt_warning, "Event hot handled");
 			} else {

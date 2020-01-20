@@ -161,7 +161,7 @@ void Obj_player_avatar::draw( Viewport *viewport ) {
 		{
 			//draw crosshairs
 			Vector v;
-			if (!(elevation >= -PI/2 && elevation <= PI/2)) {
+			if ( isnormal( elevation ) && elevation>=0 && elevation<=PI ) {
 				v = Math::rad2vector(Math::elev2rad(elevation, direction));
 			} else {
 				logmsg(lt_warning, "Elevation was NAN!");
