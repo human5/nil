@@ -207,11 +207,11 @@ void Obj_player_avatar::server_think() {
 		// only jump if we are on the ground.
 		// modify y speed, maybe amplyfy xspeed.
 		if (ABS(yspeed) < 10 && canmove() && onground()) {
-			yspeed = -65;
+			yspeed = -55;
 			// jump while walking?
 			if (controls->get_flag(Controls::cf_walk)) {
 				// jump left/right??
-				xspeed += direction* (DEFAULT_WALKSPEED/6.0);
+				xspeed += direction* (DEFAULT_WALKSPEED/5.0);
 			}
 		}
 
